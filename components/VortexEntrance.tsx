@@ -16,7 +16,7 @@ export default function VortexEntrance() {
   const [isVisible, setIsVisible] = useState(true);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const dropsRef = useRef<PaintDrop[]>([]);
-  const animationFrameRef = useRef<number>();
+  const animationFrameRef = useRef<number | undefined>(undefined);
   const fillHeightRef = useRef(0);
   const bucketYRef = useRef(-200);
   const bucketTiltRef = useRef(0);
