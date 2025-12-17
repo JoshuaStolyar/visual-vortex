@@ -3,26 +3,22 @@ import Clients from "@/components/Clients";
 import Portfolio from "@/components/Portfolio";
 import CaseStudies from "@/components/CaseStudies";
 import Process from "@/components/Process";
-import Services from "@/components/Services";
-import About from "@/components/About";
-import Contact from "@/components/Contact";
-import ParticleBackground from "@/components/ParticleBackground";
+import FAQ from "@/components/FAQ";
 import CustomCursor from "@/components/CustomCursor";
+import Navbar from "@/components/Navbar";
 
 export default function Home() {
   return (
-    <main className="bg-[#0a0014] relative">
-      <ParticleBackground />
+    <main className="bg-white relative">
       <CustomCursor />
-      <div className="relative z-20">
+      <Navbar />
+      <div className="relative">
         <Hero />
         <Clients />
         <Portfolio />
         <CaseStudies />
         <Process />
-        <Services />
-        <About />
-        <Contact />
+        <FAQ />
       </div>
     </main>
   );

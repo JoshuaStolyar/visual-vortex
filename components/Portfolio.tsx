@@ -9,12 +9,12 @@ export default function Portfolio() {
   const portfolioItems = [
     {
       id: 1,
-      title: "The Insane Engineering of the B-2 Bomber",
+      title: "Bali's Insane Plan to Build a $20B Subway",
       category: "thumbnails",
-      image: "https://i.ytimg.com/vi/1wMM87UKr_c/maxresdefault.jpg",
-      client: "MegaBuilds",
-      views: "4.8M",
-      videoId: "1wMM87UKr_c"
+      image: "https://i.ytimg.com/vi/Ta2bj5lpeg0/maxresdefault.jpg",
+      client: "Mega Builds",
+      views: "150K",
+      videoId: "Ta2bj5lpeg0"
     },
     {
       id: 2,
@@ -45,12 +45,12 @@ export default function Portfolio() {
     },
     {
       id: 5,
-      title: "I Investigated a REAL Amber Alert..",
+      title: "The Insane Engineering of the B-2 Bomber",
       category: "thumbnails",
-      image: "https://i.ytimg.com/vi/zdI_sVNUPr8/maxresdefault.jpg",
-      client: "Tyler Vitelli",
-      views: "1.1M",
-      videoId: "zdI_sVNUPr8"
+      image: "https://i.ytimg.com/vi/1wMM87UKr_c/maxresdefault.jpg",
+      client: "MegaBuilds",
+      views: "4.8M",
+      videoId: "1wMM87UKr_c"
     },
     {
       id: 6,
@@ -63,12 +63,12 @@ export default function Portfolio() {
     },
     {
       id: 7,
-      title: "Bali's Insane Plan to Build a $20B Subway",
+      title: "I Investigated a REAL Amber Alert..",
       category: "thumbnails",
-      image: "https://i.ytimg.com/vi/Ta2bj5lpeg0/maxresdefault.jpg",
-      client: "Mega Builds",
-      views: "150K",
-      videoId: "Ta2bj5lpeg0"
+      image: "https://i.ytimg.com/vi/zdI_sVNUPr8/maxresdefault.jpg",
+      client: "Tyler Vitelli",
+      views: "1.1M",
+      videoId: "zdI_sVNUPr8"
     },
     {
       id: 8,
@@ -109,35 +109,29 @@ export default function Portfolio() {
   const filteredItems = portfolioItems.filter(item => item.category === activeFilter);
 
   return (
-    <section id="portfolio" className="relative py-32 bg-[#0a0014] overflow-hidden">
-      {/* Background gradient blur effects */}
-      <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute top-1/3 right-1/4 w-96 h-96 bg-purple-600/20 rounded-full blur-[120px]"></div>
-        <div className="absolute bottom-1/3 left-1/4 w-96 h-96 bg-blue-600/15 rounded-full blur-[120px]"></div>
-      </div>
-
+    <section id="portfolio" className="relative py-32 bg-white overflow-hidden">
       <div className="relative container mx-auto px-6">
         <div className="max-w-7xl mx-auto">
           {/* Section Header */}
-          <div className="text-center mb-16">
-            <h2 className="text-5xl md:text-7xl lg:text-8xl font-bold text-white mb-8">
+          <div className="text-center mb-12">
+            <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 mb-4">
               Our Portfolio
             </h2>
-            <p className="text-2xl md:text-3xl text-white/60 max-w-3xl mx-auto">
+            <p className="text-lg md:text-xl text-gray-600 max-w-2xl mx-auto">
               Showcasing our best work in thumbnails and video editing
             </p>
           </div>
 
           {/* Filter Tabs */}
-          <div className="flex flex-wrap justify-center gap-4 mb-16">
+          <div className="flex flex-wrap justify-center gap-3 mb-12">
             {filters.map((filter) => (
               <button
                 key={filter.id}
                 onClick={() => setActiveFilter(filter.id)}
-                className={`px-6 py-3 rounded-lg font-semibold text-lg transition-all duration-300 ${
+                className={`px-6 py-3 rounded-lg font-semibold transition-all duration-200 ${
                   activeFilter === filter.id
-                    ? "bg-gradient-to-r from-purple-600 to-blue-600 text-white shadow-[0_0_30px_rgba(124,58,237,0.5)]"
-                    : "border border-white/20 text-white/60 hover:text-white hover:border-white/40"
+                    ? "bg-blue-600 text-white shadow-sm"
+                    : "border-2 border-gray-200 text-gray-700 hover:border-gray-300 hover:bg-gray-50"
                 }`}
               >
                 {filter.label}
@@ -146,39 +140,39 @@ export default function Portfolio() {
           </div>
 
           {/* Portfolio Grid */}
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
             {filteredItems.map((item) => (
               <a
                 key={item.id}
                 href={item.isShort ? `https://youtube.com/shorts/${item.videoId}` : `https://youtube.com/watch?v=${item.videoId}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group relative rounded-2xl overflow-hidden border border-white/10 backdrop-blur-sm bg-white/5 hover:bg-white/10 transition-all duration-300 hover:scale-[1.02] hover:shadow-[0_0_40px_rgba(124,58,237,0.3)] cursor-pointer"
+                className="group relative rounded-2xl overflow-hidden border-2 border-gray-200 bg-white hover:shadow-2xl hover:border-blue-300 transition-all duration-300"
               >
                 {/* Image */}
-                <div className="relative aspect-video bg-white/5">
+                <div className="relative aspect-video bg-gray-100 overflow-hidden">
                   <Image
                     src={item.image}
                     alt={item.title}
                     fill
-                    className="object-cover"
+                    className="object-cover group-hover:scale-105 transition-transform duration-300"
                   />
                   {/* Overlay on hover */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-purple-600/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-6">
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-200 flex items-end p-6">
                     <div className="text-white">
-                      <div className="text-xl font-bold mb-2">{item.title}</div>
-                      <div className="text-purple-200">Client: {item.client}</div>
-                      {!item.isShort && <div className="text-purple-200">{item.views} views</div>}
+                      <div className="text-lg font-bold mb-1">{item.title}</div>
+                      <div className="text-white/90 text-sm">Client: {item.client}</div>
+                      {!item.isShort && <div className="text-white/80 text-sm">{item.views} views</div>}
                     </div>
                   </div>
                 </div>
 
                 {/* Info */}
                 <div className="p-6">
-                  <h3 className="text-xl font-bold text-white mb-2 line-clamp-2">{item.title}</h3>
+                  <h3 className="text-xl font-bold text-gray-900 mb-3 line-clamp-2 group-hover:text-blue-600 transition-colors">{item.title}</h3>
                   <div className="flex justify-between items-center">
-                    <p className="text-purple-400 font-semibold">{item.client}</p>
-                    {!item.isShort && <p className="text-white/60 text-sm">{item.views} views</p>}
+                    <p className="text-blue-600 font-semibold text-base">{item.client}</p>
+                    {!item.isShort && <p className="text-gray-600 text-base font-medium">{item.views} views</p>}
                   </div>
                 </div>
               </a>
@@ -188,7 +182,7 @@ export default function Portfolio() {
           {/* Empty State */}
           {filteredItems.length === 0 && (
             <div className="text-center py-20">
-              <p className="text-2xl text-white/60">No items in this category yet</p>
+              <p className="text-xl text-gray-600">No items in this category yet</p>
             </div>
           )}
         </div>

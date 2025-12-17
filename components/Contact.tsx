@@ -1,50 +1,54 @@
 export default function Contact() {
   return (
-    <section id="contact" className="relative py-32 bg-[#0a0014] overflow-hidden">
-      {/* Background gradient blur effects */}
-      <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-purple-600/30 rounded-full blur-[120px]"></div>
-      </div>
-
+    <section id="contact" className="relative py-32 bg-gray-50 overflow-hidden">
       <div className="relative container mx-auto px-6">
-        <div className="max-w-4xl mx-auto text-center">
-          <h2 className="text-4xl md:text-6xl font-bold text-white mb-6">
-            Ready to{" "}
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-blue-500">
-              Scale Your Content?
-            </span>
-          </h2>
-          <p className="text-xl text-white/60 mb-12 max-w-2xl mx-auto">
-            Join the top creators who trust Visual Vortex to power their growth.
-            Book a call and let's discuss how we can help you dominate your platform.
-          </p>
+        <div className="max-w-4xl mx-auto">
+          {/* Header */}
+          <div className="text-center mb-12">
+            <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 mb-6">
+              Let's Work Together
+            </h2>
+            <p className="text-xl md:text-2xl text-gray-600 max-w-2xl mx-auto">
+              Ready to scale your content? Book a call and let's discuss how we can help you grow.
+            </p>
+          </div>
 
-          <div className="flex flex-col sm:flex-row gap-6 justify-center items-center mb-16">
+          {/* Contact Card */}
+          <div className="p-10 md:p-12 rounded-3xl border-2 border-gray-200 bg-white shadow-sm text-center">
+            <div className="mb-8">
+              <div className="text-6xl mb-6">📞</div>
+              <h3 className="text-2xl font-bold text-gray-900 mb-4">Schedule a Discovery Call</h3>
+              <p className="text-lg text-gray-600 mb-8 max-w-xl mx-auto">
+                We'll discuss your goals, analyze your current performance, and create a custom growth strategy for your channel.
+              </p>
+            </div>
+
             <a
               href="https://calendly.com/josh-visualvortex"
               target="_blank"
               rel="noopener noreferrer"
-              className="group relative px-10 py-5 bg-gradient-to-r from-purple-600 to-blue-600 rounded-lg font-bold text-xl text-white hover:shadow-[0_0_50px_rgba(124,58,237,0.6)] transition-all duration-300 hover:-translate-y-1"
+              className="inline-block px-10 py-5 bg-blue-600 text-white rounded-lg font-bold text-xl hover:bg-blue-700 transition-all duration-200 shadow-md hover:shadow-lg"
             >
-              Book Your Strategy Call
+              Book Your Call Now
             </a>
+
+            <div className="mt-8 pt-8 border-t border-gray-200">
+              <p className="text-gray-600">
+                Or email us at{" "}
+                <a href="mailto:hello@visualvortex.com" className="text-blue-600 hover:text-blue-700 font-semibold">
+                  hello@visualvortex.com
+                </a>
+              </p>
+            </div>
           </div>
 
-          <div className="grid md:grid-cols-3 gap-6 max-w-3xl mx-auto">
-            <div className="p-6 rounded-xl border border-white/10 backdrop-blur-sm bg-white/5">
-              <div className="text-3xl mb-3">⚡</div>
-              <h3 className="text-white font-semibold mb-2">Fast Turnaround</h3>
-              <p className="text-white/60 text-sm">Quick delivery without compromising quality</p>
-            </div>
-            <div className="p-6 rounded-xl border border-white/10 backdrop-blur-sm bg-white/5">
-              <div className="text-3xl mb-3">🎯</div>
-              <h3 className="text-white font-semibold mb-2">Results-Focused</h3>
-              <p className="text-white/60 text-sm">Data-driven approach to maximize ROI</p>
-            </div>
-            <div className="p-6 rounded-xl border border-white/10 backdrop-blur-sm bg-white/5">
-              <div className="text-3xl mb-3">🚀</div>
-              <h3 className="text-white font-semibold mb-2">Scalable Systems</h3>
-              <p className="text-white/60 text-sm">Built to grow with your channel</p>
+          {/* Footer */}
+          <div className="mt-16 text-center text-gray-600">
+            <p className="mb-4">© 2024 Visual Vortex. All rights reserved.</p>
+            <div className="flex justify-center gap-6">
+              <a href="#" className="hover:text-gray-900 transition-colors">Privacy Policy</a>
+              <span>•</span>
+              <a href="#" className="hover:text-gray-900 transition-colors">Terms of Service</a>
             </div>
           </div>
         </div>

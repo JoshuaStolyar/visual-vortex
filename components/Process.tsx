@@ -1,27 +1,21 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 
 export default function Process() {
-  const [visibleSteps, setVisibleSteps] = useState<number[]>([]);
-  const [selectedStep, setSelectedStep] = useState<number | null>(null);
+  const [isVisible, setIsVisible] = useState(false);
+  const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
+  const [modalIndex, setModalIndex] = useState<number | null>(null);
   const sectionRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
-          // Animate steps in sequence
-          [0, 1, 2, 3, 4].forEach((index) => {
-            setTimeout(() => {
-              setVisibleSteps((prev) => [...prev, index]);
-            }, index * 200);
-          });
+          setIsVisible(true);
         }
       },
-      {
-        threshold: 0.2,
-      }
+      { threshold: 0.1 }
     );
 
     if (sectionRef.current) {
@@ -35,144 +29,152 @@ export default function Process() {
     };
   }, []);
 
+  // Close modal on escape key
+  useEffect(() => {
+    const handleEscape = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setModalIndex(null);
+    };
+    window.addEventListener("keydown", handleEscape);
+    return () => window.removeEventListener("keydown", handleEscape);
+  }, []);
+
   const steps = [
     {
       number: "01",
-      title: "Discovery Call",
-      icon: "📞",
-      description: "We hop on a call to see if you're the right fit. We discuss pricing, posting strategy, and mindset to ensure we're aligned on your growth goals.",
-      details: [
-        "30-minute strategy consultation",
-        "Channel audit & growth potential analysis",
-        "Pricing transparency & package selection",
-        "Mindset alignment for long-term success"
-      ],
-      highlight: "Free Consultation"
+      title: "Apply",
+      description: "Book a call. No fluff, just results-focused conversation.",
+      color: "from-blue-500 to-purple-500",
+      includes: [
+        "Free 30-minute discovery call",
+        "Channel audit & growth assessment",
+        "Custom strategy overview",
+        "Q&A about our process"
+      ]
     },
     {
       number: "02",
-      title: "Onboarding & Analysis",
-      icon: "📊",
-      description: "After agreeing and getting the first payment, we get access to your channel and dive deep into your analytics. Our strategist creates a comprehensive report on what you're doing well and areas for improvement.",
-      details: [
-        "Full channel access & analytics review",
-        "Competitor analysis in your niche",
-        "Detailed performance report",
-        "Identify quick wins & long-term opportunities"
-      ],
-      highlight: "Deep Dive Report"
+      title: "Strategy",
+      description: "Deep dive into your niche. We find what actually works for YOUR audience.",
+      color: "from-purple-500 to-pink-500",
+      includes: [
+        "Competitor analysis",
+        "Content strategy roadmap",
+        "Target audience research",
+        "Growth timeline & milestones"
+      ]
     },
     {
       number: "03",
-      title: "Research & Strategy",
-      icon: "🎯",
-      description: "We research your niche thoroughly and start brainstorming content ideas with thumbnail concepts. We analyze each idea to ensure it's realistic and fits your channel's vision.",
-      details: [
-        "Niche research & trend analysis",
-        "Custom content idea brainstorming",
-        "Thumbnail concept development",
-        "Video strategy & hook planning"
-      ],
-      highlight: "Custom Strategy"
+      title: "Create",
+      description: "Viral thumbnails + retention-focused edits that stop the scroll.",
+      color: "from-blue-500 to-cyan-500",
+      includes: [
+        "Professional thumbnail design",
+        "Full video editing & post-production",
+        "SEO optimization (titles, tags, descriptions)",
+        "Unlimited revisions"
+      ]
     },
     {
       number: "04",
-      title: "Implementation",
-      icon: "🚀",
-      description: "We launch your first post and implement proven strategies. We set up organized systems for content production, and you get 24/7 access to contact our team for updates anytime.",
-      details: [
-        "Launch first optimized video",
-        "Set up production systems & workflows",
-        "24/7 team access via Slack/Discord",
-        "Real-time updates & quick turnarounds"
-      ],
-      highlight: "24/7 Support"
-    },
-    {
-      number: "05",
-      title: "Growth & Optimization",
-      icon: "📈",
-      description: "Bi-weekly calls to discuss progress and optimize. All you do is record the content—we handle everything else. Watch your views quadruple and quality metrics soar.",
-      details: [
-        "Bi-weekly strategy & optimization calls",
-        "Continuous performance tracking",
+      title: "Scale",
+      description: "Launch, analyze, optimize. Repeat until we hit your goals.",
+      color: "from-green-500 to-emerald-500",
+      includes: [
+        "Performance tracking & analytics",
         "A/B testing thumbnails & titles",
-        "You record, we handle everything else"
-      ],
-      highlight: "4x View Growth"
+        "Strategy refinement based on data",
+        "Ongoing support & consultation"
+      ]
     }
   ];
 
   return (
-    <section ref={sectionRef} className="relative py-32 bg-[#0a0014] overflow-hidden">
-      {/* Background gradient blur effects */}
-      <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute top-1/4 left-1/3 w-96 h-96 bg-purple-600/20 rounded-full blur-[120px]"></div>
-        <div className="absolute bottom-1/4 right-1/3 w-96 h-96 bg-blue-600/15 rounded-full blur-[120px]"></div>
+    <section id="process" ref={sectionRef} className="relative py-32 bg-gray-50 overflow-hidden">
+      {/* Background accent */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <div className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-gradient-to-tr from-blue-50 to-purple-50 rounded-full blur-3xl opacity-30"></div>
       </div>
 
       <div className="relative container mx-auto px-6">
-        <div className="max-w-7xl mx-auto">
-          {/* Section Header */}
+        <div className="max-w-6xl mx-auto">
+          {/* Header */}
           <div className="text-center mb-20">
-            <h2 className="text-5xl md:text-7xl lg:text-8xl font-bold text-white mb-8">
-              Our Process
+            <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 mb-4">
+              How It Works
             </h2>
-            <p className="text-2xl md:text-3xl text-white/60 max-w-3xl mx-auto">
-              A proven system to scale your content and grow your audience
+            <p className="text-lg md:text-xl text-gray-600 max-w-2xl mx-auto">
+              Our simple 4-step process to scale your channel
             </p>
           </div>
 
           {/* Steps Grid */}
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
+          <div className="relative grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+            {/* Connecting arrows - hidden on mobile, shown on desktop */}
+            <div className="hidden lg:block absolute top-24 left-0 right-0 h-1 pointer-events-none">
+              <div className="absolute inset-x-0 flex justify-between px-[12.5%]">
+                <svg className="w-1/4 h-8" viewBox="0 0 100 20" fill="none">
+                  <path d="M0 10 L90 10 L85 5 M90 10 L85 15" stroke="#e5e7eb" strokeWidth="2" />
+                </svg>
+                <svg className="w-1/4 h-8" viewBox="0 0 100 20" fill="none">
+                  <path d="M0 10 L90 10 L85 5 M90 10 L85 15" stroke="#e5e7eb" strokeWidth="2" />
+                </svg>
+                <svg className="w-1/4 h-8" viewBox="0 0 100 20" fill="none">
+                  <path d="M0 10 L90 10 L85 5 M90 10 L85 15" stroke="#e5e7eb" strokeWidth="2" />
+                </svg>
+              </div>
+            </div>
+
             {steps.map((step, index) => (
               <div
                 key={index}
-                onClick={() => setSelectedStep(index)}
-                className={`relative p-8 rounded-2xl border border-white/10 backdrop-blur-sm bg-white/5 hover:bg-white/10 transition-all duration-500 hover:scale-[1.05] hover:shadow-[0_0_50px_rgba(124,58,237,0.5)] cursor-pointer group ${
-                  visibleSteps.includes(index)
-                    ? "opacity-100 translate-y-0"
-                    : "opacity-0 translate-y-8"
-                } ${index === 4 ? "md:col-span-2 lg:col-span-1" : ""}`}
+                className={`transition-all duration-500 ${
+                  isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
+                }`}
+                style={{ transitionDelay: `${index * 100}ms` }}
+                onMouseEnter={() => setHoveredIndex(index)}
+                onMouseLeave={() => setHoveredIndex(null)}
               >
-                {/* Highlight Badge */}
-                <div className="absolute -top-3 -right-3 px-4 py-1 bg-gradient-to-r from-purple-600 to-blue-600 rounded-full text-white text-sm font-bold shadow-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                  {step.highlight}
+                <div
+                  onClick={() => setModalIndex(index)}
+                  className={`relative p-8 rounded-2xl border-2 bg-white transition-all duration-300 h-full cursor-pointer ${
+                    hoveredIndex === index
+                      ? "border-blue-400 shadow-2xl scale-105 -translate-y-1"
+                      : "border-gray-200 shadow-lg"
+                  }`}
+                >
+                  {/* Number Badge */}
+                  <div className={`w-16 h-16 rounded-xl bg-gradient-to-br ${step.color} flex items-center justify-center shadow-md mb-6 transition-transform duration-300 ${
+                    hoveredIndex === index ? "scale-110" : ""
+                  }`}>
+                    <span className="text-2xl font-black text-white">{step.number}</span>
+                  </div>
+
+                  {/* Title */}
+                  <h3 className="text-2xl font-bold text-gray-900 mb-4">
+                    {step.title}
+                  </h3>
+
+                  {/* Description */}
+                  <p className="text-gray-600 leading-relaxed text-base mb-4">
+                    {step.description}
+                  </p>
+
+                  {/* Click to learn more indicator */}
+                  <div className="flex items-center gap-2 text-blue-600 font-semibold text-sm">
+                    <span>Click to learn more</span>
+                    <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                    </svg>
+                  </div>
                 </div>
 
-                {/* Icon */}
-                <div className="text-6xl mb-4 transform group-hover:scale-110 group-hover:rotate-12 transition-transform duration-300">
-                  {step.icon}
-                </div>
-
-                {/* Step Number */}
-                <div className="text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-blue-500 mb-4">
-                  {step.number}
-                </div>
-
-                {/* Step Title */}
-                <h3 className="text-2xl font-bold text-white mb-4 group-hover:text-purple-300 transition-colors">
-                  {step.title}
-                </h3>
-
-                {/* Step Description */}
-                <p className="text-white/70 leading-relaxed mb-4">
-                  {step.description}
-                </p>
-
-                {/* Click to learn more indicator */}
-                <div className="flex items-center gap-2 text-purple-400 text-sm font-semibold opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                  <span>Click to learn more</span>
-                  <span className="transform group-hover:translate-x-1 transition-transform">→</span>
-                </div>
-
-                {/* Animated pulse effect */}
-                <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-purple-600/20 to-blue-600/20 opacity-0 group-hover:opacity-100 animate-pulse pointer-events-none"></div>
-
-                {/* Connector Arrow (hidden on last item and mobile) */}
+                {/* Mobile arrow - shown only on mobile */}
                 {index < steps.length - 1 && (
-                  <div className="hidden lg:block absolute top-1/2 -right-4 z-10">
-                    <div className="text-3xl text-purple-400 animate-bounce-horizontal">→</div>
+                  <div className="lg:hidden flex justify-center my-4">
+                    <svg className="w-8 h-8 text-gray-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+                    </svg>
                   </div>
                 )}
               </div>
@@ -180,87 +182,116 @@ export default function Process() {
           </div>
 
           {/* CTA */}
-          <div className="text-center">
+          <div className="text-center mt-20">
+            <h3 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6">
+              Ready to scale?
+            </h3>
             <a
               href="https://calendly.com/josh-visualvortex"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-block px-8 py-4 bg-gradient-to-r from-purple-600 to-blue-600 rounded-lg font-semibold text-lg text-white hover:shadow-[0_0_40px_rgba(124,58,237,0.5)] transition-all duration-300 hover:-translate-y-1"
+              className="inline-block px-10 py-5 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-xl font-semibold text-lg hover:from-blue-700 hover:to-purple-700 transition-all duration-200 shadow-lg hover:shadow-xl hover:scale-105"
             >
-              Start Your Growth Journey
+              Book Your Free Call
             </a>
           </div>
         </div>
       </div>
 
-      {/* Modal/Popup */}
-      {selectedStep !== null && (
+      {/* Modal */}
+      {modalIndex !== null && (
         <div
-          className="fixed inset-0 bg-black/80 backdrop-blur-sm flex items-center justify-center p-6 animate-fadeIn"
-          style={{ zIndex: 100 }}
-          onClick={() => setSelectedStep(null)}
+          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-fadeIn"
+          onClick={() => setModalIndex(null)}
         >
           <div
-            className="relative max-w-2xl w-full bg-gradient-to-br from-[#1a0b2e] to-[#0a0014] border border-purple-500/30 rounded-2xl p-8 shadow-[0_0_80px_rgba(124,58,237,0.6)] animate-scaleIn"
+            className="relative bg-white rounded-3xl shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto animate-scaleIn"
             onClick={(e) => e.stopPropagation()}
           >
-            {/* Close Button */}
+            {/* Close button */}
             <button
-              onClick={() => setSelectedStep(null)}
-              className="absolute top-4 right-4 text-white/60 hover:text-white text-3xl font-bold transition-colors"
+              onClick={() => setModalIndex(null)}
+              className="absolute top-6 right-6 w-10 h-10 rounded-full bg-gray-100 hover:bg-gray-200 transition-colors flex items-center justify-center"
             >
-              ×
+              <svg className="w-6 h-6 text-gray-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+              </svg>
             </button>
 
-            {/* Icon and Number */}
-            <div className="flex items-center gap-4 mb-6">
-              <div className="text-7xl">{steps[selectedStep].icon}</div>
-              <div className="text-6xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-blue-500">
-                {steps[selectedStep].number}
+            {/* Modal Content */}
+            <div className="p-8 md:p-12">
+              {/* Number Badge */}
+              <div className={`w-20 h-20 rounded-2xl bg-gradient-to-br ${steps[modalIndex].color} flex items-center justify-center shadow-lg mb-6`}>
+                <span className="text-3xl font-black text-white">{steps[modalIndex].number}</span>
               </div>
-            </div>
 
-            {/* Title */}
-            <h3 className="text-4xl font-bold text-white mb-4">
-              {steps[selectedStep].title}
-            </h3>
+              {/* Title */}
+              <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
+                {steps[modalIndex].title}
+              </h2>
 
-            {/* Highlight Badge */}
-            <div className="inline-block px-4 py-2 bg-gradient-to-r from-purple-600 to-blue-600 rounded-full text-white text-sm font-bold mb-6">
-              {steps[selectedStep].highlight}
-            </div>
+              {/* Description */}
+              <p className="text-xl text-gray-600 mb-8">
+                {steps[modalIndex].description}
+              </p>
 
-            {/* Description */}
-            <p className="text-xl text-white/80 mb-8 leading-relaxed">
-              {steps[selectedStep].description}
-            </p>
+              {/* What's Included */}
+              <div className="bg-gray-50 rounded-2xl p-8 mb-8">
+                <h3 className="text-2xl font-bold text-gray-900 mb-6">What's Included:</h3>
+                <ul className="space-y-4">
+                  {steps[modalIndex].includes.map((item, i) => (
+                    <li key={i} className="flex items-start gap-4">
+                      <svg className="w-6 h-6 text-green-500 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                        <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                      </svg>
+                      <span className="text-lg text-gray-700">{item}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
 
-            {/* Details List */}
-            <div className="space-y-4 mb-8">
-              <h4 className="text-2xl font-bold text-purple-300 mb-4">What's Included:</h4>
-              {steps[selectedStep].details.map((detail, idx) => (
-                <div
-                  key={idx}
-                  className="flex items-start gap-3 p-4 rounded-lg bg-white/5 border border-white/10 hover:bg-white/10 transition-all duration-300 hover:translate-x-2"
+              {/* CTA Button for Apply step */}
+              {modalIndex === 0 && (
+                <a
+                  href="https://calendly.com/josh-visualvortex"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="block w-full px-8 py-5 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-xl font-semibold text-lg text-center hover:from-blue-700 hover:to-purple-700 transition-all duration-200 shadow-lg hover:shadow-xl"
                 >
-                  <div className="text-2xl">✓</div>
-                  <p className="text-lg text-white/90">{detail}</p>
-                </div>
-              ))}
+                  Book Your Discovery Call
+                </a>
+              )}
             </div>
-
-            {/* CTA Button */}
-            <a
-              href="https://calendly.com/josh-visualvortex"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="block w-full text-center px-8 py-4 bg-gradient-to-r from-purple-600 to-blue-600 rounded-lg font-semibold text-lg text-white hover:shadow-[0_0_40px_rgba(124,58,237,0.5)] transition-all duration-300 hover:-translate-y-1"
-            >
-              Book Your Discovery Call
-            </a>
           </div>
         </div>
       )}
+
+      <style jsx>{`
+        @keyframes fadeIn {
+          from {
+            opacity: 0;
+          }
+          to {
+            opacity: 1;
+          }
+        }
+        @keyframes scaleIn {
+          from {
+            opacity: 0;
+            transform: scale(0.9);
+          }
+          to {
+            opacity: 1;
+            transform: scale(1);
+          }
+        }
+        .animate-fadeIn {
+          animation: fadeIn 0.2s ease-out;
+        }
+        .animate-scaleIn {
+          animation: scaleIn 0.3s ease-out;
+        }
+      `}</style>
     </section>
   );
 }

@@ -20,37 +20,42 @@ export default function AnimatedCounter({
   const elementRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    const startAnimation = () => {
+      if (hasAnimated) return;
+      setHasAnimated(true);
+
+      const startTime = Date.now();
+      const endTime = startTime + duration;
+
+      const updateCounter = () => {
+        const now = Date.now();
+        const progress = Math.min((now - startTime) / duration, 1);
+
+        // Easing function for smooth animation
+        const easeOutQuart = 1 - Math.pow(1 - progress, 4);
+        const currentCount = Math.floor(easeOutQuart * end);
+
+        setCount(currentCount);
+
+        if (now < endTime) {
+          requestAnimationFrame(updateCounter);
+        } else {
+          setCount(end);
+        }
+      };
+
+      requestAnimationFrame(updateCounter);
+    };
+
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
-          if (entry.isIntersecting && !hasAnimated) {
-            setHasAnimated(true);
-
-            const startTime = Date.now();
-            const endTime = startTime + duration;
-
-            const updateCounter = () => {
-              const now = Date.now();
-              const progress = Math.min((now - startTime) / duration, 1);
-
-              // Easing function for smooth animation
-              const easeOutQuart = 1 - Math.pow(1 - progress, 4);
-              const currentCount = Math.floor(easeOutQuart * end);
-
-              setCount(currentCount);
-
-              if (now < endTime) {
-                requestAnimationFrame(updateCounter);
-              } else {
-                setCount(end);
-              }
-            };
-
-            requestAnimationFrame(updateCounter);
+          if (entry.isIntersecting) {
+            startAnimation();
           }
         });
       },
-      { threshold: 0.3 }
+      { threshold: 0 }
     );
 
     if (elementRef.current) {
