@@ -13,7 +13,7 @@ export default function CustomCursor() {
   const [cursorPosition, setCursorPosition] = useState({ x: -100, y: -100 });
   const [isPointer, setIsPointer] = useState(false);
   const trailRef = useRef<CursorTrail[]>([]);
-  const animationFrameRef = useRef<number>();
+  const animationFrameRef = useRef<number | undefined>(undefined);
 
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
