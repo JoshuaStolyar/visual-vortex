@@ -102,7 +102,7 @@ export default function Portfolio() {
     },
     {
       id: 11,
-      title: "Long Form Video 1",
+      title: "Never Try Skipping School",
       category: "longform",
       image: "https://i.ytimg.com/vi/dsUH02Lq_Bk/maxresdefault.jpg",
       client: "Tyler Vitelli",
@@ -111,7 +111,7 @@ export default function Portfolio() {
     },
     {
       id: 12,
-      title: "Long Form Video 2",
+      title: "Our Group Chat Got Leaked",
       category: "longform",
       image: "https://i.ytimg.com/vi/KYz2LzMF4hk/maxresdefault.jpg",
       client: "Tyler Vitelli",
@@ -120,7 +120,7 @@ export default function Portfolio() {
     },
     {
       id: 13,
-      title: "Long Form Video 3",
+      title: "School Drills Are Dumb",
       category: "longform",
       image: "https://i.ytimg.com/vi/gALKT9BeMsQ/maxresdefault.jpg",
       client: "Tyler Vitelli",
