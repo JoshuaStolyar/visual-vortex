@@ -67,7 +67,8 @@ export default function AnimatedCounter({
 
   return (
     <div ref={elementRef} className={className}>
-      {count}{suffix}
+      <span>{count}</span>
+      <span>{suffix}</span>
     </div>
   );
 }

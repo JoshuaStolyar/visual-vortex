@@ -2,9 +2,11 @@
 
 import Image from "next/image";
 import { useState } from "react";
+import { X } from "lucide-react";
 
 export default function Portfolio() {
   const [activeFilter, setActiveFilter] = useState("thumbnails");
+  const [selectedVideo, setSelectedVideo] = useState<{videoId: string, isShort: boolean} | null>(null);
 
   const portfolioItems = [
     {
@@ -72,7 +74,7 @@ export default function Portfolio() {
     },
     {
       id: 8,
-      title: "I Survived a REAL School Lockdown AGAIN..",
+      title: "I Survived a REAL School Lockdown",
       category: "thumbnails",
       image: "https://i.ytimg.com/vi/-EFAaXL8FhU/maxresdefault.jpg",
       client: "Tyler Vitelli",
@@ -97,6 +99,87 @@ export default function Portfolio() {
       views: "TBD",
       videoId: "9Zu3O1W1Tt0",
       isShort: true
+    },
+    {
+      id: 11,
+      title: "Long Form Video 1",
+      category: "longform",
+      image: "https://i.ytimg.com/vi/dsUH02Lq_Bk/maxresdefault.jpg",
+      client: "Tyler Vitelli",
+      views: "400K+",
+      videoId: "dsUH02Lq_Bk"
+    },
+    {
+      id: 12,
+      title: "Long Form Video 2",
+      category: "longform",
+      image: "https://i.ytimg.com/vi/KYz2LzMF4hk/maxresdefault.jpg",
+      client: "Tyler Vitelli",
+      views: "2.5M",
+      videoId: "KYz2LzMF4hk"
+    },
+    {
+      id: 13,
+      title: "Long Form Video 3",
+      category: "longform",
+      image: "https://i.ytimg.com/vi/gALKT9BeMsQ/maxresdefault.jpg",
+      client: "Tyler Vitelli",
+      views: "1.5M",
+      videoId: "gALKT9BeMsQ"
+    },
+    {
+      id: 14,
+      title: "The Bees RUINED My Life..",
+      category: "longform",
+      image: "https://i.ytimg.com/vi/j_tLSuKBdbw/maxresdefault.jpg",
+      client: "Tyler Vitelli",
+      views: "1.2M",
+      videoId: "j_tLSuKBdbw"
+    },
+    {
+      id: 15,
+      title: "Never pick up a Hitchhiker at night..",
+      category: "longform",
+      image: "https://i.ytimg.com/vi/VjtXbWL5fnU/maxresdefault.jpg",
+      client: "Tyler Vitelli",
+      views: "2M",
+      videoId: "VjtXbWL5fnU"
+    },
+    {
+      id: 16,
+      title: "Never Fall Asleep FIRST at a Sleepover..",
+      category: "longform",
+      image: "https://i.ytimg.com/vi/Q0M2PEPgTcg/maxresdefault.jpg",
+      client: "Tyler Vitelli",
+      views: "1M",
+      videoId: "Q0M2PEPgTcg"
+    },
+    {
+      id: 17,
+      title: "I Got My Creepy Teacher FIRED.. (Storytime)",
+      category: "longform",
+      image: "https://i.ytimg.com/vi/qyG0lVZF7ZA/maxresdefault.jpg",
+      client: "Tyler Vitelli",
+      views: "2.5M",
+      videoId: "qyG0lVZF7ZA"
+    },
+    {
+      id: 18,
+      title: "We Have A STALKER..",
+      category: "longform",
+      image: "https://i.ytimg.com/vi/1fYpW2jpDx0/maxresdefault.jpg",
+      client: "Tyler Vitelli",
+      views: "1.6M",
+      videoId: "1fYpW2jpDx0"
+    },
+    {
+      id: 19,
+      title: "I Survived a REAL Kidnapping.. (Storytime)",
+      category: "longform",
+      image: "https://i.ytimg.com/vi/ohhJIge1sKE/maxresdefault.jpg",
+      client: "Tyler Vitelli",
+      views: "1.8M",
+      videoId: "ohhJIge1sKE"
     }
   ];
 
@@ -140,44 +223,93 @@ export default function Portfolio() {
           </div>
 
           {/* Portfolio Grid */}
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {filteredItems.map((item) => (
-              <a
-                key={item.id}
-                href={item.isShort ? `https://youtube.com/shorts/${item.videoId}` : `https://youtube.com/watch?v=${item.videoId}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="group relative rounded-2xl overflow-hidden border-2 border-gray-200 bg-white hover:shadow-2xl hover:border-blue-300 transition-all duration-300"
-              >
-                {/* Image */}
-                <div className="relative aspect-video bg-gray-100 overflow-hidden">
-                  <Image
-                    src={item.image}
-                    alt={item.title}
-                    fill
-                    className="object-cover group-hover:scale-105 transition-transform duration-300"
-                  />
-                  {/* Overlay on hover */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-200 flex items-end p-6">
-                    <div className="text-white">
-                      <div className="text-lg font-bold mb-1">{item.title}</div>
-                      <div className="text-white/90 text-sm">Client: {item.client}</div>
-                      {!item.isShort && <div className="text-white/80 text-sm">{item.views} views</div>}
+          {activeFilter === "longform" ? (
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {filteredItems.map((item) => (
+                <div key={item.id} className="rounded-2xl overflow-hidden border-2 border-gray-200 bg-white shadow-lg hover:shadow-2xl hover:border-blue-300 transition-all duration-300">
+                  {/* Embedded Video */}
+                  <div className="relative bg-black" style={{paddingBottom: '56.25%'}}>
+                    <iframe
+                      className="absolute top-0 left-0 w-full h-full"
+                      src={`https://www.youtube.com/embed/${item.videoId}`}
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                      allowFullScreen
+                    />
+                  </div>
+                  {/* Info */}
+                  <div className="p-6">
+                    <h3 className="text-xl font-bold text-gray-900 mb-3 line-clamp-2">{item.title}</h3>
+                    <div className="flex justify-between items-center">
+                      <p className="text-blue-600 font-semibold text-base">{item.client}</p>
+                      <p className="text-gray-600 text-base font-medium">{item.views} views</p>
                     </div>
                   </div>
                 </div>
+              ))}
+            </div>
+          ) : (
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {filteredItems.map((item) => (
+                <div
+                  key={item.id}
+                  onClick={activeFilter === "shortform" ? () => setSelectedVideo({videoId: item.videoId, isShort: item.isShort || false}) : undefined}
+                  className={`group relative rounded-2xl overflow-hidden border-2 border-gray-200 bg-white hover:shadow-2xl hover:border-blue-300 transition-all duration-300 ${activeFilter === "shortform" ? "cursor-pointer" : ""}`}
+                >
+                  {/* Image */}
+                  <div className="relative aspect-video bg-gray-100 overflow-hidden">
+                    <Image
+                      src={item.image}
+                      alt={item.title}
+                      fill
+                      className="object-cover group-hover:scale-105 transition-transform duration-300"
+                    />
+                    {/* Overlay on hover */}
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-200 flex items-end p-6">
+                      <div className="text-white">
+                        <div className="text-lg font-bold mb-1">{item.title}</div>
+                        <div className="text-white/90 text-sm">Client: {item.client}</div>
+                        {!item.isShort && <div className="text-white/80 text-sm">{item.views} views</div>}
+                      </div>
+                    </div>
+                  </div>
 
-                {/* Info */}
-                <div className="p-6">
-                  <h3 className="text-xl font-bold text-gray-900 mb-3 line-clamp-2 group-hover:text-blue-600 transition-colors">{item.title}</h3>
-                  <div className="flex justify-between items-center">
-                    <p className="text-blue-600 font-semibold text-base">{item.client}</p>
-                    {!item.isShort && <p className="text-gray-600 text-base font-medium">{item.views} views</p>}
+                  {/* Info */}
+                  <div className="p-6">
+                    <h3 className="text-xl font-bold text-gray-900 mb-3 line-clamp-2 group-hover:text-blue-600 transition-colors">{item.title}</h3>
+                    <div className="flex justify-between items-center">
+                      <p className="text-blue-600 font-semibold text-base">{item.client}</p>
+                      {!item.isShort && <p className="text-gray-600 text-base font-medium">{item.views} views</p>}
+                    </div>
                   </div>
                 </div>
-              </a>
-            ))}
-          </div>
+              ))}
+            </div>
+          )}
+
+          {/* Video Modal */}
+          {selectedVideo && (
+            <div className="fixed inset-0 bg-black/90 z-50 flex items-center justify-center p-4" onClick={() => setSelectedVideo(null)}>
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setSelectedVideo(null);
+                }}
+                className="absolute top-4 right-4 text-white hover:text-gray-300 transition-colors z-10"
+              >
+                <X size={28} />
+              </button>
+              <div className={`w-full ${selectedVideo.isShort ? 'max-w-sm' : 'max-w-3xl'}`} onClick={(e) => e.stopPropagation()}>
+                <div className="relative bg-black rounded-lg overflow-hidden" style={{paddingBottom: selectedVideo.isShort ? '177.78%' : '56.25%'}}>
+                  <iframe
+                    className="absolute top-0 left-0 w-full h-full"
+                    src={`https://www.youtube.com/embed/${selectedVideo.videoId}?autoplay=1`}
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowFullScreen
+                  />
+                </div>
+              </div>
+            </div>
+          )}
 
           {/* Empty State */}
           {filteredItems.length === 0 && (
