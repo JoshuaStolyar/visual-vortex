@@ -1,151 +1,126 @@
 "use client";
 
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 
-interface CursorTrail {
+interface TrailPoint {
   x: number;
   y: number;
-  opacity: number;
-  size: number;
+  age: number;
 }
 
 export default function CustomCursor() {
-  const [cursorPosition, setCursorPosition] = useState({ x: -100, y: -100 });
+  const [pos, setPos] = useState({ x: -200, y: -200 });
   const [isPointer, setIsPointer] = useState(false);
-  const trailRef = useRef<CursorTrail[]>([]);
-  const animationFrameRef = useRef<number | undefined>(undefined);
+  const trailRef = useRef<TrailPoint[]>([]);
+  const [, forceUpdate] = useState(0);
+  const rafRef = useRef<number | undefined>(undefined);
 
   useEffect(() => {
-    const handleMouseMove = (e: MouseEvent) => {
-      setCursorPosition({ x: e.clientX, y: e.clientY });
+    const onMove = (e: MouseEvent) => {
+      setPos({ x: e.clientX, y: e.clientY });
 
-      // Check if hovering over clickable element
       const target = e.target as HTMLElement;
-      const isClickable =
-        target.tagName === "A" ||
-        target.tagName === "BUTTON" ||
-        target.closest("a") ||
-        target.closest("button") ||
-        window.getComputedStyle(target).cursor === "pointer";
+      const clickable = target.tagName === "A" || target.tagName === "BUTTON" || !!target.closest("a") || !!target.closest("button");
+      setIsPointer(clickable);
 
-      setIsPointer(!!isClickable);
-
-      // Add trail particle
-      trailRef.current.push({
-        x: e.clientX,
-        y: e.clientY,
-        opacity: 1,
-        size: isClickable ? 20 : 15,
-      });
-
-      // Limit trail length
-      if (trailRef.current.length > 15) {
-        trailRef.current.shift();
-      }
+      trailRef.current.push({ x: e.clientX, y: e.clientY, age: 0 });
+      if (trailRef.current.length > 20) trailRef.current.shift();
     };
 
-    const handleMouseLeave = () => {
-      setCursorPosition({ x: -100, y: -100 });
-    };
-
-    window.addEventListener("mousemove", handleMouseMove);
-    document.addEventListener("mouseleave", handleMouseLeave);
-
-    // Animate trail fade
-    const animateTrail = () => {
+    const animate = () => {
       trailRef.current = trailRef.current
-        .map((particle) => ({
-          ...particle,
-          opacity: particle.opacity * 0.9,
-          size: particle.size * 0.95,
-        }))
-        .filter((particle) => particle.opacity > 0.05);
-
-      animationFrameRef.current = requestAnimationFrame(animateTrail);
+        .map(p => ({ ...p, age: p.age + 1 }))
+        .filter(p => p.age < 20);
+      forceUpdate(n => n + 1);
+      rafRef.current = requestAnimationFrame(animate);
     };
 
-    animateTrail();
+    window.addEventListener("mousemove", onMove);
+    rafRef.current = requestAnimationFrame(animate);
 
     return () => {
-      window.removeEventListener("mousemove", handleMouseMove);
-      document.removeEventListener("mouseleave", handleMouseLeave);
-      if (animationFrameRef.current) {
-        cancelAnimationFrame(animationFrameRef.current);
-      }
+      window.removeEventListener("mousemove", onMove);
+      if (rafRef.current) cancelAnimationFrame(rafRef.current);
     };
   }, []);
 
   return (
     <>
-      {/* Hide default cursor */}
-      <style jsx global>{`
-        * {
-          cursor: none !important;
-        }
-      `}</style>
+      <style jsx global>{`* { cursor: none !important; }`}</style>
 
-      {/* Trail particles */}
-      {trailRef.current.map((particle, index) => (
-        <div
-          key={index}
-          className="fixed pointer-events-none z-[9999] rounded-full"
-          style={{
-            left: particle.x,
-            top: particle.y,
-            width: particle.size,
-            height: particle.size,
-            transform: "translate(-50%, -50%)",
-            background: `radial-gradient(circle, rgba(168, 85, 247, ${particle.opacity * 0.6}), rgba(147, 51, 234, ${particle.opacity * 0.3}), transparent)`,
-            opacity: particle.opacity,
-          }}
-        />
-      ))}
+      {/* Trail — shooting star tail */}
+      {trailRef.current.map((point, i) => {
+        const progress = i / trailRef.current.length;
+        const fadeAge = 1 - point.age / 20;
+        const opacity = progress * fadeAge * 0.8;
+        const size = 2 + progress * 5;
+        return (
+          <div
+            key={i}
+            className="fixed pointer-events-none z-[9998] rounded-full"
+            style={{
+              left: point.x,
+              top: point.y,
+              width: size,
+              height: size,
+              transform: "translate(-50%, -50%)",
+              opacity,
+              background: progress > 0.6
+                ? `rgba(255, 255, 255, ${opacity})`
+                : progress > 0.3
+                ? `rgba(167, 139, 250, ${opacity})`
+                : `rgba(96, 165, 250, ${opacity})`,
+              boxShadow: progress > 0.7 ? `0 0 ${size * 2}px rgba(255,255,255,0.6)` : undefined,
+            }}
+          />
+        );
+      })}
 
-      {/* Main cursor */}
+      {/* Star head */}
       <div
-        className="fixed pointer-events-none z-[10000] transition-transform duration-100"
+        className="fixed pointer-events-none z-[9999]"
         style={{
-          left: cursorPosition.x,
-          top: cursorPosition.y,
-          transform: `translate(-50%, -50%) scale(${isPointer ? 1.5 : 1})`,
+          left: pos.x,
+          top: pos.y,
+          transform: `translate(-50%, -50%) scale(${isPointer ? 1.4 : 1})`,
+          transition: 'transform 0.1s ease',
         }}
       >
-        {/* Outer glow ring */}
-        <div
-          className="absolute inset-0 rounded-full border-2 border-purple-400 transition-all duration-300"
-          style={{
-            width: isPointer ? 40 : 32,
-            height: isPointer ? 40 : 32,
-            marginLeft: isPointer ? -20 : -16,
-            marginTop: isPointer ? -20 : -16,
-            boxShadow: "0 0 20px rgba(168, 85, 247, 0.6), 0 0 40px rgba(168, 85, 247, 0.3)",
-          }}
-        />
-
-        {/* Inner dot */}
-        <div
-          className="absolute rounded-full bg-gradient-to-br from-purple-400 to-blue-500 transition-all duration-300"
-          style={{
-            width: isPointer ? 12 : 8,
-            height: isPointer ? 12 : 8,
-            marginLeft: isPointer ? -6 : -4,
-            marginTop: isPointer ? -6 : -4,
-            boxShadow: "0 0 10px rgba(168, 85, 247, 0.8)",
-          }}
-        />
-
-        {/* Rotating ring effect */}
-        <div
-          className="absolute inset-0 rounded-full border border-purple-500/30 animate-spin-slow"
-          style={{
-            width: isPointer ? 50 : 40,
-            height: isPointer ? 50 : 40,
-            marginLeft: isPointer ? -25 : -20,
-            marginTop: isPointer ? -25 : -20,
-            borderTopColor: "rgba(168, 85, 247, 0.8)",
-            borderRightColor: "transparent",
-          }}
-        />
+        {/* Outer glow */}
+        <div style={{
+          position: 'absolute',
+          width: 28,
+          height: 28,
+          marginLeft: -14,
+          marginTop: -14,
+          borderRadius: '50%',
+          background: 'radial-gradient(circle, rgba(255,255,255,0.15) 0%, transparent 70%)',
+          boxShadow: '0 0 20px 8px rgba(167,139,250,0.4)',
+        }} />
+        {/* Bright center */}
+        <div style={{
+          position: 'absolute',
+          width: 6,
+          height: 6,
+          marginLeft: -3,
+          marginTop: -3,
+          borderRadius: '50%',
+          background: '#fff',
+          boxShadow: '0 0 8px 4px rgba(255,255,255,0.9), 0 0 16px 6px rgba(167,139,250,0.7)',
+        }} />
+        {/* Star rays */}
+        {[0, 45, 90, 135].map(deg => (
+          <div key={deg} style={{
+            position: 'absolute',
+            width: 1,
+            height: 10,
+            marginLeft: -0.5,
+            marginTop: -5,
+            background: 'linear-gradient(to bottom, transparent, rgba(255,255,255,0.8), transparent)',
+            transform: `rotate(${deg}deg)`,
+            borderRadius: 1,
+          }} />
+        ))}
       </div>
     </>
   );

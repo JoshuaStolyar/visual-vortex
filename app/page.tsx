@@ -4,12 +4,14 @@ import Portfolio from "@/components/Portfolio";
 import CaseStudies from "@/components/CaseStudies";
 import Process from "@/components/Process";
 import FAQ from "@/components/FAQ";
+import About from "@/components/About";
+import Contact from "@/components/Contact";
 import CustomCursor from "@/components/CustomCursor";
 import Navbar from "@/components/Navbar";
 
 export default function Home() {
   return (
-    <main className="bg-white relative">
+    <main className="relative" style={{background: '#030008'}}>
       <CustomCursor />
       <Navbar />
       <div className="relative">
@@ -19,6 +21,8 @@ export default function Home() {
         <CaseStudies />
         <Process />
         <FAQ />
+        <About />
+        <Contact />
       </div>
     </main>
   );
