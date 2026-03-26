@@ -12,7 +12,7 @@ export default function CaseStudies() {
 
           <div className="text-center mb-16">
             <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-4">Case Studies</h2>
-            <p className="text-white/50 text-lg">Real results from real creators</p>
+            <p className="text-white/50 text-lg">Results Speak For Themselves</p>
           </div>
 
           <div className="grid md:grid-cols-2 gap-6">
@@ -69,21 +69,14 @@ export default function CaseStudies() {
               </div>
 
               <div className="flex flex-col gap-2">
-                <div className="grid grid-cols-2 gap-2">
-                  {/* dylan-subs.png */}
-                  <div className="rounded-lg overflow-hidden border border-white/5 bg-white">
-                    <Image src="/dylan-subs.png" alt="Dylan Carey subscribers" width={600} height={400} className="w-full h-auto" />
-                  </div>
-                  {/* dylan-rev.png — revenue number blurred */}
-                  <div className="rounded-lg overflow-hidden border border-white/5 bg-white relative">
-                    <Image src="/dylan-rev.png" alt="Dylan Carey revenue" width={600} height={400} className="w-full h-auto" />
-                    {/* blur over revenue number (top-right ~75-100% x, 0-35% y) */}
-                    <div className="absolute top-0 right-0 w-[28%] h-[38%] backdrop-blur-md bg-white/30 rounded-bl-lg" />
-                  </div>
-                </div>
-                {/* dylan-views.png */}
                 <div className="rounded-lg overflow-hidden border border-white/5 bg-white">
-                  <Image src="/dylan-views.png" alt="Dylan Carey views" width={1200} height={400} className="w-full h-auto" />
+                  <Image src="/dylan-stats.png" alt="Dylan Carey stats" width={1364} height={274} className="w-full h-auto" />
+                </div>
+                <div className="rounded-lg overflow-hidden border border-white/5 bg-white">
+                  <Image src="/dylan-growth.png" alt="Dylan Carey channel growth" width={2174} height={536} className="w-full h-auto" />
+                </div>
+                <div className="rounded-lg overflow-hidden border border-white/5 bg-white">
+                  <Image src="/dylan-50k.webp" alt="Dylan Carey 50K subscribers dashboard" width={1928} height={852} className="w-full h-auto" />
                 </div>
               </div>
             </div>

@@ -1,40 +1,74 @@
+import Image from "next/image";
+
 export default function About() {
   return (
     <section id="about" className="relative py-32 overflow-hidden">
       <div className="absolute top-0 right-[-10%] w-[500px] h-[500px] rounded-full bg-blue-700/10 blur-[120px] pointer-events-none" />
 
       <div className="relative z-10 container mx-auto px-6">
-        <div className="max-w-4xl mx-auto">
+        <div className="max-w-5xl mx-auto">
+
+          {/* Title */}
           <div className="text-center mb-16">
-            <p className="text-white/40 text-sm font-medium uppercase tracking-widest mb-3">Who We Are</p>
-            <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6">About Visual Vortex</h2>
-            <p className="text-white/70 text-xl leading-relaxed max-w-2xl mx-auto">
-              We're a content growth firm specializing in scaling creators and brands through data-driven strategies and world-class production.
+            <div className="flex items-center justify-center gap-4 mb-6">
+              <div className="h-px w-16 bg-gradient-to-r from-transparent to-purple-500/50" />
+              <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white">About</h2>
+              <div className="h-px w-16 bg-gradient-to-l from-transparent to-purple-500/50" />
+            </div>
+            <p className="text-white/60 text-lg max-w-2xl mx-auto leading-relaxed">
+              I'm Josh, a 16-year-old passionate about social media and one of the founders of Visual Vortex.
             </p>
           </div>
 
-          {/* Stats */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-12">
-            {[
-              { value: "250M+", label: "Monthly Long-Form Views" },
-              { value: "999M+", label: "Monthly Short-Form Views" },
-              { value: "72+", label: "Creators & Channels" },
-              { value: "3+", label: "Years Experience" },
-            ].map((stat) => (
-              <div key={stat.label} className="text-center p-6 rounded-2xl border border-white/5 bg-white/[0.03] hover:border-purple-500/30 hover:bg-white/[0.06] transition-all duration-300">
-                <div className="text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-blue-400 mb-2">{stat.value}</div>
-                <div className="text-xs text-white/40 font-medium">{stat.label}</div>
+          {/* Image + Info */}
+          <div className="grid md:grid-cols-2 gap-12 items-start">
+
+            {/* Left — photo */}
+            <div className="rounded-2xl overflow-hidden border border-white/5 bg-white/[0.02] max-w-[75%]">
+              <Image
+                src="/about-photo.jpg"
+                alt="Josh — Founder of Visual Vortex"
+                width={600}
+                height={800}
+                className="w-full h-auto object-cover"
+              />
+            </div>
+
+            {/* Right — info sections */}
+            <div className="flex flex-col gap-10 pt-2">
+
+              {/* ── EDIT: update each section below with your own details ── */}
+
+              <div>
+                <h3 className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-blue-400 font-bold text-xl mb-2">
+                  Experience
+                </h3>
+                <p className="text-white/60 leading-relaxed">
+                  Over 4 years of editing & strategy experience, and have scaled over 10 of my own faceless channels amassing close to 1M subscribers.
+                </p>
               </div>
-            ))}
+
+              <div>
+                <h3 className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-blue-400 font-bold text-xl mb-2">
+                  Accomplishments
+                </h3>
+                <p className="text-white/60 leading-relaxed">
+                  Working with 72+ creators & brands — helping generate over 500M long-form views, 10B+ short-form views, and 10M+ subscribers gained across clients, all in 2025.
+                </p>
+              </div>
+
+              <div>
+                <h3 className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-blue-400 font-bold text-xl mb-2">
+                  Location
+                </h3>
+                <p className="text-white/60 leading-relaxed">
+                  Based in the Bay Area, California.
+                </p>
+              </div>
+
+            </div>
           </div>
 
-          {/* Mission */}
-          <div className="mt-10 p-8 rounded-2xl border border-purple-500/20 bg-gradient-to-b from-purple-500/10 to-transparent">
-            <h3 className="text-lg font-semibold text-white mb-3">Our Mission</h3>
-            <p className="text-white/70 leading-relaxed">
-              To empower creators and brands with the tools, strategies, and support they need to build sustainable, scalable content businesses that make a lasting impact.
-            </p>
-          </div>
         </div>
       </div>
     </section>

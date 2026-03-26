@@ -83,17 +83,6 @@ export default function Process() {
             ))}
           </div>
 
-          <div className="text-center mt-20">
-            <h3 className="text-3xl font-bold text-white mb-6">Ready to scale?</h3>
-            <a
-              href="https://calendly.com/josh-visualvortex"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-block px-10 py-4 bg-gradient-to-r from-purple-600 to-blue-600 text-white rounded-xl font-semibold text-lg hover:from-purple-500 hover:to-blue-500 transition-all duration-200 shadow-[0_0_30px_rgba(139,92,246,0.4)] hover:shadow-[0_0_40px_rgba(139,92,246,0.6)]"
-            >
-              Book Your Free Call
-            </a>
-          </div>
         </div>
       </div>
 

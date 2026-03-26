@@ -2,8 +2,6 @@ import Hero from "@/components/Hero";
 import Clients from "@/components/Clients";
 import Portfolio from "@/components/Portfolio";
 import CaseStudies from "@/components/CaseStudies";
-import Process from "@/components/Process";
-import FAQ from "@/components/FAQ";
 import About from "@/components/About";
 import Contact from "@/components/Contact";
 import CustomCursor from "@/components/CustomCursor";
@@ -19,8 +17,6 @@ export default function Home() {
         <Clients />
         <Portfolio />
         <CaseStudies />
-        <Process />
-        <FAQ />
         <About />
         <Contact />
       </div>
