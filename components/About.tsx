@@ -16,7 +16,7 @@ export default function About() {
               <div className="h-px w-16 bg-gradient-to-l from-transparent to-purple-500/50" />
             </div>
             <p className="text-white/60 text-lg max-w-2xl mx-auto leading-relaxed">
-              I'm Josh, a 16-year-old passionate about social media and one of the founders of Visual Vortex.
+              I'm Josh, a 17-year-old passionate about social media and one of the founders of Visual Vortex.
             </p>
           </div>
 
