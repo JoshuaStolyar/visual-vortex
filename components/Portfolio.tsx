@@ -20,16 +20,14 @@ export default function Portfolio() {
   }, [selectedVideo]);
 
   const portfolioItems = [
-    { id: 1, title: "Bali's Insane Plan to Build a $20B Subway", category: "thumbnails", image: "https://i.ytimg.com/vi/Ta2bj5lpeg0/maxresdefault.jpg", client: "Mega Builds", views: "150K", videoId: "Ta2bj5lpeg0" },
-    { id: 2, title: "I got Tricked into Joining a REAL Cult…", category: "thumbnails", image: "https://i.ytimg.com/vi/oDcXLPUCx3g/hqdefault.jpg", client: "Tyler Vitelli", views: "1.13M", videoId: "oDcXLPUCx3g" },
-    { id: 3, title: "Never get into an Uber past midnight..", category: "thumbnails", image: "https://i.ytimg.com/vi/DQt0eyxmOIs/maxresdefault.jpg", client: "Tyler Vitelli", views: "2.6M", videoId: "DQt0eyxmOIs" },
-    { id: 4, title: "I got Revenge on My Childhood Bully..", category: "thumbnails", image: "https://i.ytimg.com/vi/6zxA4gFLohE/maxresdefault.jpg", client: "Tyler Vitelli", views: "2.6M", videoId: "6zxA4gFLohE" },
-    { id: 5, title: "The Insane Engineering of the B-2 Bomber", category: "thumbnails", image: "https://i.ytimg.com/vi/1wMM87UKr_c/maxresdefault.jpg", client: "MegaBuilds", views: "4.8M", videoId: "1wMM87UKr_c" },
-    { id: 6, title: "I Survived a REAL School Lockdown..", category: "thumbnails", image: "https://i.ytimg.com/vi/keKKS1yR3SY/maxresdefault.jpg", client: "Tyler Vitelli", views: "7.5M", videoId: "keKKS1yR3SY" },
     { id: 7, title: "I Investigated a REAL Amber Alert..", category: "thumbnails", image: "https://i.ytimg.com/vi/zdI_sVNUPr8/maxresdefault.jpg", client: "Tyler Vitelli", views: "1.1M", videoId: "zdI_sVNUPr8" },
-    { id: 8, title: "I Survived a REAL School Lockdown", category: "thumbnails", image: "https://i.ytimg.com/vi/-EFAaXL8FhU/maxresdefault.jpg", client: "Tyler Vitelli", views: "1.3M", videoId: "-EFAaXL8FhU" },
-    { id: 9, title: "My Best Friend Got Me ARRESTED..", category: "thumbnails", image: "https://i.ytimg.com/vi/CTc4XCYbOQw/maxresdefault.jpg", client: "Tyler Vitelli", views: "1.3M", videoId: "CTc4XCYbOQw" },
-    { id: 10, title: "Easy Hair Tutorial", category: "shortform", image: "https://i.ytimg.com/vi/9Zu3O1W1Tt0/maxresdefault.jpg", client: "Dillon Latham", views: "TBD", videoId: "9Zu3O1W1Tt0", isShort: true },
+    { id: 3, title: 'I Investigated The "Gates To Hell"', category: "thumbnails", image: "/isaac-gates.jpg", client: "Isaac Explores", views: "2.2M", videoId: "" },
+    { id: 5, title: "The Insane Engineering of the B-2 Bomber", category: "thumbnails", image: "https://i.ytimg.com/vi/1wMM87UKr_c/maxresdefault.jpg", client: "MegaBuilds", views: "4.8M", videoId: "1wMM87UKr_c" },
+    { id: 4, title: "I got Revenge on My Childhood Bully..", category: "thumbnails", image: "https://i.ytimg.com/vi/6zxA4gFLohE/maxresdefault.jpg", client: "Tyler Vitelli", views: "2.6M", videoId: "6zxA4gFLohE" },
+    { id: 1, title: "Bali's Insane Plan to Build a $20B Subway", category: "thumbnails", image: "https://i.ytimg.com/vi/Ta2bj5lpeg0/maxresdefault.jpg", client: "Mega Builds", views: "150K", videoId: "Ta2bj5lpeg0" },
+    { id: 6, title: "Lies We All Believed As Kids", category: "thumbnails", image: "/lies.jpg", client: "Tyler Vitelli", views: "1.4M", videoId: "h7oha8aXuSU" },
+    { id: 10, title: "Ranking On Chad LeaderBoard", category: "shortform", image: "https://i.ytimg.com/vi/_ZwL7EVpcRY/hqdefault.jpg", client: "Simpletics", views: "TBD", videoId: "_ZwL7EVpcRY", isShort: true },
+    { id: 20, title: "Arch Burger Contreversay", category: "shortform", image: "https://i.ytimg.com/vi/166u7JPkZ5s/hqdefault.jpg", client: "Dillon Latham", views: "TBD", videoId: "166u7JPkZ5s", isShort: true },
     { id: 11, title: "Never Try Skipping School", category: "longform", image: "https://i.ytimg.com/vi/dsUH02Lq_Bk/maxresdefault.jpg", client: "Tyler Vitelli", views: "400K+", videoId: "dsUH02Lq_Bk" },
     { id: 12, title: "Our Group Chat Got Leaked", category: "longform", image: "https://i.ytimg.com/vi/KYz2LzMF4hk/maxresdefault.jpg", client: "Tyler Vitelli", views: "2.5M", videoId: "KYz2LzMF4hk" },
     { id: 13, title: "School Drills Are Dumb", category: "longform", image: "https://i.ytimg.com/vi/gALKT9BeMsQ/maxresdefault.jpg", client: "Tyler Vitelli", views: "1.5M", videoId: "gALKT9BeMsQ" },

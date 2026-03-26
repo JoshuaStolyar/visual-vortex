@@ -26,8 +26,9 @@ export default function Clients() {
   }, []);
 
   const clients = [
-    { name: "Tyler Vitelli", subscribers: "6M+ subs", image: "/tyler.jpg" },
+    { name: "Tyler Vitelli", subscribers: "7M+ subs", image: "/tyler.jpg" },
     { name: "Tech Joyce", subscribers: "2.5M+ subs", image: "/joyce.jpg" },
+    { name: "Isaac Explores", subscribers: "2M+ subs", image: "/isaac.jpg" },
     { name: "Mega Builds", subscribers: "1.5M+ subs", image: "/megabuilds.jpg" },
     { name: "Dillon Latham", subscribers: "1M+ subs", image: "/dillon.jpg" },
     { name: "Thomas Minc", subscribers: "600K+ subs", image: "/thomas.jpg" },
@@ -35,8 +36,10 @@ export default function Clients() {
     { name: "Yoeatz", subscribers: "450K+ subs", image: "/yoeatz.jpg" },
     { name: "Limmy Talks", subscribers: "350K+ followers", image: "/limmy.jpg" },
     { name: "Mega Proyectos", subscribers: "300K+ subs", image: "/megaproyectos.jpg" },
+    { name: "Chanler Rodgers", subscribers: "250K+ followers", image: "/chanlerrodgers.jpg" },
+    { name: "IssaMeZeny", subscribers: "200K+ subs", image: "/issaamezeny.jpg" },
+    { name: "Dylan Carey", subscribers: "100K+ subs", image: "/dylancarey.jpg" },
     { name: "NextStepNow", subscribers: "50K+ subs", image: "/nextstepnow.jpg" },
-    { name: "Richard Zheng", subscribers: "50K+ followers", image: "/richard.jpg" },
   ];
 
   const brands = [
@@ -50,6 +53,7 @@ export default function Clients() {
 
   return (
     <section id="clients" className="relative py-16 overflow-hidden">
+      <div className="absolute top-0 left-0 right-0 h-32 pointer-events-none z-0" style={{ background: 'linear-gradient(to bottom, #030008, transparent)' }} />
       <div className="relative z-10 container mx-auto px-6">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-12">
