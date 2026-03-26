@@ -19,7 +19,6 @@ const EmailIcon = () => (
 const navItems = [
   { name: "Clients", href: "#clients" },
   { name: "Work", href: "#portfolio" },
-  { name: "Services", href: "#process" },
   { name: "About", href: "#about" },
   { name: "Contact", href: "#contact" },
 ];
@@ -37,7 +36,7 @@ export default function Navbar() {
   return (
     <>
       <nav className="fixed top-0 left-0 right-0 z-50 bg-transparent">
-        <div className="max-w-7xl mx-auto px-6 py-5 flex items-center justify-between">
+        <div className="max-w-7xl mx-auto px-6 py-5 flex items-center justify-between relative">
 
           {/* Logo */}
           <a href="#" className="shrink-0 group flex items-center gap-2">
@@ -46,8 +45,8 @@ export default function Navbar() {
             </span>
           </a>
 
-          {/* Desktop Nav Links */}
-          <div className="hidden md:flex items-center gap-8">
+          {/* Desktop Nav Links — absolutely centered */}
+          <div className="hidden md:flex items-center gap-8 absolute left-1/2 -translate-x-1/2">
             {navItems.map((item) => (
               <a
                 key={item.name}
