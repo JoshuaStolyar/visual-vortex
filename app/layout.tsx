@@ -15,6 +15,18 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "Visual Vortex",
   description: "A content growth firm building systems that scale creators & brands.",
+  openGraph: {
+    title: "Visual Vortex",
+    description: "A content growth firm building systems that scale creators & brands.",
+    url: "https://www.visualvrtx.com",
+    siteName: "Visual Vortex",
+    type: "website",
+  },
+  twitter: {
+    card: "summary",
+    title: "Visual Vortex",
+    description: "A content growth firm building systems that scale creators & brands.",
+  },
 };
 
 export default function RootLayout({
