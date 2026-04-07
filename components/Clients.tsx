@@ -37,6 +37,7 @@ export default function Clients() {
     { name: "Limmy Talks", subscribers: "350K+ followers", image: "/limmy.jpg" },
     { name: "Mega Proyectos", subscribers: "300K+ subs", image: "/megaproyectos.jpg" },
     { name: "Chanler Rodgers", subscribers: "250K+ followers", image: "/chanlerrodgers.jpg" },
+    { name: "Quinn Mendenhall", subscribers: "250K+ followers", image: "/quinn.webp" },
     { name: "IssaMeZeny", subscribers: "200K+ subs", image: "/issaamezeny.jpg" },
     { name: "Dylan Carey", subscribers: "100K+ subs", image: "/dylancarey.jpg" },
     { name: "NextStepNow", subscribers: "50K+ subs", image: "/nextstepnow.jpg" },
