@@ -101,7 +101,7 @@ export default function Clients() {
                   <div>
                     <div className="flex items-center gap-1.5">
                       <h3 className="font-semibold text-white text-sm whitespace-nowrap">{client.name}</h3>
-                      <CheckCircle2 className={`w-4 h-4 flex-shrink-0 ${getBadgeClass(client.subscribers)}`} />
+                      <CheckCircle2 strokeWidth={1.5} className={`w-4 h-4 flex-shrink-0 ${getBadgeClass(client.subscribers)}`} />
                     </div>
                     <p className="text-xs text-white/40 font-medium">{client.subscribers}</p>
                   </div>
