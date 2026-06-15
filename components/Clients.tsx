@@ -26,7 +26,7 @@ export default function Clients() {
   }, []);
 
   const clients = [
-    { name: "Tyler Vitelli", subscribers: "7M+ subs", image: "/tyler.jpg" },
+    { name: "Tyler Vitelli", subscribers: "7.5M+ subs", image: "/tyler.jpg" },
     { name: "His Story", subscribers: "3.06M+ subs", image: "/his-story.jpg" },
     { name: "Tech Joyce", subscribers: "2.5M+ subs", image: "/joyce.jpg" },
     { name: "Isaac Explores", subscribers: "2M+ subs", image: "/isaac.jpg" },
