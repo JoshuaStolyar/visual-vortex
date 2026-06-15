@@ -27,6 +27,7 @@ export default function Clients() {
 
   const clients = [
     { name: "Tyler Vitelli", subscribers: "7M+ subs", image: "/tyler.jpg" },
+    { name: "Tyler Vitelli 2", subscribers: "1.3M+ subs", image: "/tyler2.jpg" },
     { name: "His Story", subscribers: "3.06M+ subs", image: "/his-story.jpg" },
     { name: "Tech Joyce", subscribers: "2.5M+ subs", image: "/joyce.jpg" },
     { name: "Isaac Explores", subscribers: "2M+ subs", image: "/isaac.jpg" },
@@ -43,6 +44,7 @@ export default function Clients() {
     { name: "IssaMeZeny", subscribers: "200K+ subs", image: "/issaamezeny.jpg" },
     { name: "Dylan Carey", subscribers: "100K+ subs", image: "/dylancarey.jpg" },
     { name: "NextStepNow", subscribers: "50K+ subs", image: "/nextstepnow.jpg" },
+    { name: "Tyler Vitelli Gaming", subscribers: "10K+ subs", image: "/tylergaming.jpg" },
   ];
 
   const brands = [
