@@ -27,9 +27,11 @@ export default function Clients() {
 
   const clients = [
     { name: "Tyler Vitelli", subscribers: "7M+ subs", image: "/tyler.jpg" },
+    { name: "His Story", subscribers: "3.06M+ subs", image: "/his-story.jpg" },
     { name: "Tech Joyce", subscribers: "2.5M+ subs", image: "/joyce.jpg" },
     { name: "Isaac Explores", subscribers: "2M+ subs", image: "/isaac.jpg" },
     { name: "Mega Builds", subscribers: "1.5M+ subs", image: "/megabuilds.jpg" },
+    { name: "Her Story", subscribers: "1.35M+ subs", image: "/her-story.jpg" },
     { name: "Dillon Latham", subscribers: "1M+ subs", image: "/dillon.jpg" },
     { name: "Thomas Minc", subscribers: "600K+ subs", image: "/thomas.jpg" },
     { name: "Nicholas Berndt", subscribers: "500K+ subs", image: "/nicholas.jpg" },
