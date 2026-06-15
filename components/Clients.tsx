@@ -58,9 +58,9 @@ export default function Clients() {
   const duplicatedClients = [...clients, ...clients, ...clients, ...clients];
 
   const getBadgeClass = (subscribers: string) => {
-    if (subscribers.includes("M")) return "text-yellow-400 fill-yellow-400";
+    if (subscribers.includes("M")) return "text-white fill-yellow-400";
     const value = parseInt(subscribers, 10);
-    if (subscribers.includes("K") && value < 100) return "text-slate-200 fill-slate-200";
+    if (subscribers.includes("K") && value < 100) return "text-white fill-slate-400";
     return "text-white/30 fill-white/30";
   };
 
