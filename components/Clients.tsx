@@ -43,6 +43,7 @@ export default function Clients() {
     { name: "Quinn Mendenhall", subscribers: "250K+ followers", image: "/quinn.webp" },
     { name: "IssaMeZeny", subscribers: "200K+ subs", image: "/issaamezeny.jpg" },
     { name: "Dillon Latham Live", subscribers: "175K+ subs", image: "/dillonlive.jpg" },
+    { name: "MerosRBX", subscribers: "130K+ subs", image: "/merosrbx.jpg" },
     { name: "Dylan Carey", subscribers: "100K+ subs", image: "/dylancarey.jpg" },
     { name: "NextStepNow", subscribers: "50K+ subs", image: "/nextstepnow.jpg" },
     { name: "Tyler Vitelli Gaming", subscribers: "10K+ subs", image: "/tylergaming.jpg" },
