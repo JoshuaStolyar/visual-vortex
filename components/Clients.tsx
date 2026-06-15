@@ -27,12 +27,12 @@ export default function Clients() {
 
   const clients = [
     { name: "Tyler Vitelli", subscribers: "7M+ subs", image: "/tyler.jpg" },
-    { name: "Tyler Vitelli 2", subscribers: "1.3M+ subs", image: "/tyler2.jpg" },
     { name: "His Story", subscribers: "3.06M+ subs", image: "/his-story.jpg" },
     { name: "Tech Joyce", subscribers: "2.5M+ subs", image: "/joyce.jpg" },
     { name: "Isaac Explores", subscribers: "2M+ subs", image: "/isaac.jpg" },
     { name: "Mega Builds", subscribers: "1.5M+ subs", image: "/megabuilds.jpg" },
     { name: "Her Story", subscribers: "1.35M+ subs", image: "/her-story.jpg" },
+    { name: "Tyler Vitelli 2", subscribers: "1.3M+ subs", image: "/tyler2.jpg" },
     { name: "Dillon Latham", subscribers: "1M+ subs", image: "/dillon.jpg" },
     { name: "Thomas Minc", subscribers: "600K+ subs", image: "/thomas.jpg" },
     { name: "Nicholas Berndt", subscribers: "500K+ subs", image: "/nicholas.jpg" },
@@ -55,6 +55,13 @@ export default function Clients() {
   ];
 
   const duplicatedClients = [...clients, ...clients, ...clients, ...clients];
+
+  const getBadgeClass = (subscribers: string) => {
+    if (subscribers.includes("M")) return "text-yellow-400 fill-yellow-400";
+    const value = parseInt(subscribers, 10);
+    if (subscribers.includes("K") && value < 100) return "text-slate-200 fill-slate-200";
+    return "text-white/30 fill-white/30";
+  };
 
   return (
     <section id="clients" className="relative py-16 overflow-hidden">
@@ -93,7 +100,7 @@ export default function Clients() {
                   <div>
                     <div className="flex items-center gap-1.5">
                       <h3 className="font-semibold text-white text-sm whitespace-nowrap">{client.name}</h3>
-                      <CheckCircle2 className={`w-4 h-4 flex-shrink-0 ${client.subscribers.includes('M') ? 'text-yellow-400 fill-yellow-400' : 'text-white/30 fill-white/30'}`} />
+                      <CheckCircle2 className={`w-4 h-4 flex-shrink-0 ${getBadgeClass(client.subscribers)}`} />
                     </div>
                     <p className="text-xs text-white/40 font-medium">{client.subscribers}</p>
                   </div>
