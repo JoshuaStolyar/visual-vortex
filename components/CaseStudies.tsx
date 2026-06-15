@@ -47,6 +47,9 @@ export default function CaseStudies() {
                 <div className="rounded-lg overflow-hidden border border-white/5 bg-white">
                   <Image src="/tyler-views.png" alt="8.4M views on a single video" width={1200} height={400} className="w-full h-auto" />
                 </div>
+                <div className="rounded-lg overflow-hidden border border-white/5">
+                  <Image src="/tyler-podcast-rank.png" alt="#92 on Spotify Top Podcasts USA" width={1200} height={675} className="w-full h-auto" />
+                </div>
               </div>
             </div>
 
