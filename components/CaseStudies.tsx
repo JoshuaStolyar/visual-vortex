@@ -111,27 +111,27 @@ export default function CaseStudies() {
           )}
 
           {activeFilter === "spotify" && (
-            <div className="grid md:grid-cols-2 gap-6">
+            <div>
 
               {/* ── Tyler Vitelli's Stories (Podcast) ── */}
-              <div className="relative rounded-2xl border border-white/5 bg-white/[0.02] p-5">
+              <div className="relative rounded-2xl border border-white/5 bg-white/[0.02] p-8">
                 <div className="absolute top-0 left-0 w-6 h-6 border-t-2 border-l-2 border-purple-500/50 rounded-tl-2xl pointer-events-none" />
                 <div className="absolute top-0 right-0 w-6 h-6 border-t-2 border-r-2 border-purple-500/50 rounded-tr-2xl pointer-events-none" />
                 <div className="absolute bottom-0 left-0 w-6 h-6 border-b-2 border-l-2 border-blue-500/50 rounded-bl-2xl pointer-events-none" />
                 <div className="absolute bottom-0 right-0 w-6 h-6 border-b-2 border-r-2 border-blue-500/50 rounded-br-2xl pointer-events-none" />
 
-                <div className="flex items-center gap-3 mb-4">
-                  <div className="w-8 h-8 rounded-full overflow-hidden ring-2 ring-purple-500/40 shrink-0">
-                    <Image src="/tyler.jpg" alt="Tyler Vitelli" width={32} height={32} className="w-full h-full object-cover" />
+                <div className="flex items-center gap-3 mb-6">
+                  <div className="w-10 h-10 rounded-full overflow-hidden ring-2 ring-purple-500/40 shrink-0">
+                    <Image src="/tyler.jpg" alt="Tyler Vitelli" width={40} height={40} className="w-full h-full object-cover" />
                   </div>
                   <div>
-                    <div className="text-lg font-bold text-white whitespace-nowrap">
+                    <div className="text-xl font-bold text-white whitespace-nowrap">
                       Tyler Vitelli&apos;s Stories: <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-blue-400">Top 100 Podcasts USA in 3 Months</span>
                     </div>
                   </div>
                 </div>
 
-                <div className="grid grid-cols-2 gap-2">
+                <div className="grid md:grid-cols-2 gap-4">
                   <div className="rounded-lg overflow-hidden border border-white/5">
                     <Image src="/tyler-podcast-rank.png" alt="#92 on Spotify Top Podcasts USA" width={1200} height={675} className="w-full h-auto" />
                   </div>
