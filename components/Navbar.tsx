@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { Menu, X } from "lucide-react";
+import Magnetic from "./Magnetic";
 
 const TwitterIcon = () => (
   <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
@@ -17,9 +18,9 @@ const EmailIcon = () => (
 );
 
 const navItems = [
-  { name: "Clients", href: "#clients" },
   { name: "Work", href: "#portfolio" },
-  { name: "About", href: "#about" },
+  { name: "Services", href: "#services" },
+  { name: "Results", href: "#case-studies" },
   { name: "Contact", href: "#contact" },
 ];
 
@@ -29,19 +30,29 @@ export default function Navbar() {
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 40);
-    window.addEventListener("scroll", onScroll);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
   return (
     <>
-      <nav className="fixed top-0 left-0 right-0 z-50 bg-transparent">
-        <div className="max-w-7xl mx-auto px-6 py-5 flex items-center justify-between relative">
-
+      <nav
+        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
+          scrolled
+            ? "bg-[#08080a]/75 backdrop-blur-xl border-b border-white/[0.06] shadow-[0_8px_32px_-12px_rgba(0,0,0,0.6)]"
+            : "bg-transparent border-b border-transparent"
+        }`}
+      >
+        <div
+          className={`max-w-7xl mx-auto px-6 flex items-center justify-between relative transition-all duration-500 ${
+            scrolled ? "py-3.5" : "py-5"
+          }`}
+        >
           {/* Logo */}
-          <a href="#" className="shrink-0 group flex items-center gap-2">
-            <span className="text-2xl font-black tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-purple-300 via-violet-300 to-blue-300 drop-shadow-[0_0_12px_rgba(167,139,250,0.7)]">
-              Visual Vortex
+          <a href="#" className="shrink-0 group flex items-center">
+            <span className="font-display text-xl md:text-2xl font-bold tracking-tight text-white">
+              Visual Vortex<span className="text-accent">.</span>
             </span>
           </a>
 
@@ -51,15 +62,15 @@ export default function Navbar() {
               <a
                 key={item.name}
                 href={item.href}
-                className="text-white/60 hover:text-white text-sm font-medium tracking-wide transition-colors duration-200"
+                className="nav-link text-sm font-medium tracking-wide"
               >
                 {item.name}
               </a>
             ))}
           </div>
 
-          {/* Social Icons */}
-          <div className="hidden md:flex items-center gap-4">
+          {/* Right side — socials + CTA */}
+          <div className="hidden md:flex items-center gap-5">
             <a
               href="https://x.com/VisualV3rtex"
               target="_blank"
@@ -76,33 +87,57 @@ export default function Navbar() {
             >
               <EmailIcon />
             </a>
+            <Magnetic maxShift={5} strength={0.18}>
+              <a
+                href="#contact"
+                className="btn-primary px-4 py-2 text-sm rounded-lg"
+              >
+                Work With Us
+              </a>
+            </Magnetic>
           </div>
 
           {/* Mobile Menu Button */}
-          <button onClick={() => setIsOpen(!isOpen)} className="md:hidden text-white p-1">
+          <button
+            onClick={() => setIsOpen(!isOpen)}
+            className="md:hidden text-white p-2 -mr-2 rounded-lg hover:bg-white/5 transition-colors"
+            aria-label={isOpen ? "Close menu" : "Open menu"}
+          >
             {isOpen ? <X size={22} /> : <Menu size={22} />}
           </button>
         </div>
       </nav>
 
       {/* Mobile Sidebar */}
-      <div className={`fixed top-0 right-0 h-screen w-64 bg-[#0a0018] border-l border-white/5 z-50 transform transition-transform duration-300 ${isOpen ? "translate-x-0" : "translate-x-full"} md:hidden`}>
-        <div className="flex flex-col p-6 pt-20 gap-1">
-          {navItems.map((item) => (
+      <div
+        className={`fixed top-0 right-0 h-screen w-72 bg-[#0a0a0c]/95 backdrop-blur-2xl border-l border-white/[0.07] z-50 transform transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] ${
+          isOpen ? "translate-x-0" : "translate-x-full"
+        } md:hidden`}
+      >
+        <div className="flex flex-col p-6 pt-24 gap-1">
+          {navItems.map((item, i) => (
             <a
               key={item.name}
               href={item.href}
               onClick={() => setIsOpen(false)}
-              className="text-white/60 hover:text-white font-medium text-lg py-3 border-b border-white/5 transition-colors duration-200"
+              className="text-white/60 hover:text-white hover:pl-2 font-medium text-lg py-3.5 border-b border-white/[0.06] transition-all duration-300"
+              style={{ transitionDelay: isOpen ? `${i * 40}ms` : "0ms" }}
             >
               {item.name}
             </a>
           ))}
-          <div className="flex items-center gap-4 mt-6">
-            <a href="https://x.com/VisualV3rtex" target="_blank" rel="noopener noreferrer" className="text-white/40 hover:text-white transition-colors">
+          <a
+            href="#contact"
+            onClick={() => setIsOpen(false)}
+            className="btn-primary px-5 py-3 mt-8 text-sm"
+          >
+            Work With Us
+          </a>
+          <div className="flex items-center gap-5 mt-8">
+            <a href="https://x.com/VisualV3rtex" target="_blank" rel="noopener noreferrer" className="text-white/40 hover:text-white transition-colors" aria-label="X / Twitter">
               <TwitterIcon />
             </a>
-            <a href="mailto:visualvortexcreators@gmail.com" className="text-white/40 hover:text-white transition-colors">
+            <a href="mailto:visualvortexcreators@gmail.com" className="text-white/40 hover:text-white transition-colors" aria-label="Email">
               <EmailIcon />
             </a>
           </div>
@@ -110,7 +145,10 @@ export default function Navbar() {
       </div>
 
       {isOpen && (
-        <div className="fixed inset-0 bg-black/60 z-40 md:hidden" onClick={() => setIsOpen(false)} />
+        <div
+          className="fixed inset-0 bg-black/60 backdrop-blur-sm z-40 md:hidden animate-fadeIn"
+          onClick={() => setIsOpen(false)}
+        />
       )}
     </>
   );

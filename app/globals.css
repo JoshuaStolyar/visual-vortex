@@ -1,5 +1,19 @@
 @import "tailwindcss";
 
+@theme inline {
+  --font-sans: var(--font-geist-sans), -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-display: var(--font-space-grotesk), var(--font-geist-sans), -apple-system, sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, monospace;
+  --color-accent: #ff5a1f;
+}
+
+:root {
+  --bg: #08080a;
+  --accent: #ff5a1f;
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-spring: cubic-bezier(0.34, 1.72, 0.5, 1);
+}
+
 html {
   scroll-behavior: smooth;
 }
@@ -12,23 +26,55 @@ html {
   display: none;
 }
 
-:root {
-  --bg: #030008;
-}
-
 body {
   background: var(--bg);
   color: #ffffff;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+  font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
 }
 
-/* Star field */
+::selection {
+  background: rgba(255, 90, 31, 0.35);
+  color: #fff;
+}
+
+:focus-visible {
+  outline: 2px solid rgba(255, 90, 31, 0.7);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* Thin dark scrollbar */
+@media (pointer: fine) {
+  ::-webkit-scrollbar {
+    width: 10px;
+  }
+  ::-webkit-scrollbar-track {
+    background: #0a0a0c;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.14);
+    border-radius: 8px;
+    border: 2px solid #0a0a0c;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.24);
+  }
+}
+
+/* Star field — fixed, tiled, and parallax-shifted on scroll.
+   --star-shift is written by SpaceAmbience via rAF-throttled scroll handler;
+   the element is oversized vertically so the shift never reveals an edge. */
 body::before {
   content: '';
   position: fixed;
-  inset: 0;
+  inset: -840px 0;
+  background-repeat: repeat;
+  background-size: 1100px 780px;
+  transform: translate3d(0, var(--star-shift, 0px), 0);
+  will-change: transform;
   background-image:
     radial-gradient(1px 1px at 10% 15%, rgba(255,255,255,0.6) 0%, transparent 100%),
     radial-gradient(1px 1px at 25% 35%, rgba(255,255,255,0.4) 0%, transparent 100%),
@@ -49,6 +95,206 @@ body::before {
   z-index: 0;
 }
 
+/* Film grain — subtle texture over everything */
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  opacity: 0.028;
+  pointer-events: none;
+  z-index: 100;
+}
+
+/* ─── Typography helpers ─── */
+
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.45);
+}
+.eyebrow::before {
+  content: '';
+  width: 0.5rem;
+  height: 0.5rem;
+  background: var(--accent);
+  flex-shrink: 0;
+}
+
+/* ─── Surfaces ─── */
+
+.glass-card {
+  position: relative;
+  border-radius: 1.25rem;
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.04) 0%, rgba(255, 255, 255, 0.012) 100%);
+  transition: border-color 0.35s ease, background 0.35s ease, transform 0.35s var(--ease-out-expo), box-shadow 0.35s ease;
+}
+.glass-card:hover {
+  border-color: rgba(255, 255, 255, 0.16);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.06) 0%, rgba(255, 255, 255, 0.02) 100%);
+}
+.glass-card-lift:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 20px 50px -20px rgba(0, 0, 0, 0.8);
+}
+
+/* ─── Buttons ─── */
+
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  border-radius: 0.75rem;
+  background: var(--accent);
+  color: #0a0a0a;
+  font-weight: 700;
+  box-shadow: 0 8px 28px -10px rgba(255, 90, 31, 0.55);
+  transition: box-shadow 0.3s ease, transform 0.3s var(--ease-out-expo), filter 0.3s ease;
+}
+.btn-primary:hover {
+  transform: translateY(-2px);
+  filter: brightness(1.08);
+  box-shadow: 0 14px 38px -10px rgba(255, 90, 31, 0.7);
+}
+.btn-primary:active {
+  transform: translateY(0);
+}
+
+.btn-ghost {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  border-radius: 0.75rem;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  background: rgba(255, 255, 255, 0.02);
+  color: rgba(255, 255, 255, 0.85);
+  font-weight: 600;
+  transition: border-color 0.3s ease, background 0.3s ease, transform 0.3s var(--ease-out-expo), color 0.3s ease;
+}
+.btn-ghost:hover {
+  border-color: rgba(255, 90, 31, 0.55);
+  background: rgba(255, 90, 31, 0.06);
+  color: #fff;
+  transform: translateY(-2px);
+}
+
+/* ─── Nav links ─── */
+
+.nav-link {
+  position: relative;
+  padding: 0.25rem 0;
+  color: rgba(255, 255, 255, 0.6);
+  transition: color 0.25s ease;
+}
+.nav-link::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -2px;
+  height: 2px;
+  background: var(--accent);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.35s var(--ease-out-expo);
+}
+.nav-link:hover {
+  color: #fff;
+}
+.nav-link:hover::after {
+  transform: scaleX(1);
+}
+
+/* ─── Scroll reveal — fade + slide + blur-to-focus ─── */
+
+.reveal {
+  opacity: 0;
+  transform: translateY(var(--reveal-y, 28px)) scale(0.99);
+  filter: blur(6px);
+  transition:
+    opacity 0.9s var(--ease-out-expo),
+    transform 0.9s var(--ease-out-expo),
+    filter 0.7s ease-out;
+  transition-delay: var(--reveal-delay, 0ms);
+  will-change: opacity, transform, filter;
+}
+.reveal.is-revealed {
+  opacity: 1;
+  transform: none;
+  filter: blur(0);
+}
+@media (prefers-reduced-motion: reduce) {
+  .reveal {
+    opacity: 1;
+    transform: none;
+    filter: none;
+    transition: none;
+  }
+}
+
+/* ─── Orbit field (hero orrery) ─── */
+
+@keyframes orbit-spin {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+.orbit-spin {
+  animation-name: orbit-spin;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  transform-origin: 50% 50%;
+  will-change: transform;
+}
+
+@keyframes core-pulse {
+  0%, 100% { opacity: 0.85; transform: scale(1); }
+  50%      { opacity: 1; transform: scale(1.06); }
+}
+.core-pulse {
+  animation: core-pulse 5s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .orbit-spin,
+  .core-pulse {
+    animation: none;
+  }
+}
+
+/* ─── Marquee ─── */
+
+@keyframes marquee {
+  from { transform: translate3d(0, 0, 0); }
+  to   { transform: translate3d(-25%, 0, 0); }
+}
+.marquee-track {
+  animation: marquee 45s linear infinite;
+  width: fit-content;
+  will-change: transform;
+}
+.marquee-mask:hover .marquee-track {
+  animation-play-state: paused;
+}
+.marquee-mask {
+  mask-image: linear-gradient(to right, transparent, black 8%, black 92%, transparent);
+  -webkit-mask-image: linear-gradient(to right, transparent, black 8%, black 92%, transparent);
+}
+@media (prefers-reduced-motion: reduce) {
+  .marquee-track {
+    animation: none;
+  }
+}
+
+/* ─── Keyframe library ─── */
+
 @keyframes fadeIn {
   from { opacity: 0; }
   to { opacity: 1; }
@@ -59,27 +305,184 @@ body::before {
   to { opacity: 1; transform: scale(1); }
 }
 
-@keyframes float {
-  0%, 100% { transform: translateY(0px); }
-  50% { transform: translateY(-20px); }
-}
-
-@keyframes pulse-glow {
-  0%, 100% { opacity: 0.4; }
-  50% { opacity: 0.8; }
-}
-
-@keyframes dash-flow {
-  to { stroke-dashoffset: -24; }
-}
-
-@keyframes spin-slow {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+@keyframes scroll-cue {
+  0%, 100% { transform: translateY(0); opacity: 0.7; }
+  50% { transform: translateY(6px); opacity: 0.3; }
 }
 
 .animate-fadeIn { animation: fadeIn 0.3s ease-out; }
 .animate-scaleIn { animation: scaleIn 0.3s ease-out; }
-.animate-float { animation: float 6s ease-in-out infinite; }
-.animate-pulse-glow { animation: pulse-glow 3s ease-in-out infinite; }
-.animate-spin-slow { animation: spin-slow 4s linear infinite; }
+.animate-scroll-cue { animation: scroll-cue 2s ease-in-out infinite; }
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-fadeIn,
+  .animate-scaleIn,
+  .animate-scroll-cue {
+    animation: none;
+  }
+}
+
+/* ─── Custom cursor ─── */
+
+html.has-custom-cursor,
+html.has-custom-cursor * {
+  cursor: none !important;
+}
+
+/* ─── Comets — rare shooting-star accents across the fixed starfield.
+       Position/angle vars are re-randomized per iteration by SpaceAmbience.
+       Visible only ~6% of each cycle; transform/opacity only. ─── */
+
+.comet {
+  position: fixed;
+  left: var(--comet-x, 70%);
+  top: var(--comet-y, 20%);
+  width: 120px;
+  height: 1px;
+  border-radius: 999px;
+  pointer-events: none;
+  z-index: 1;
+  opacity: 0;
+  background: linear-gradient(to right, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.65));
+  transform: rotate(var(--comet-angle, 165deg)) translateX(0);
+  transform-origin: right center;
+  animation: comet-streak var(--comet-duration, 16s) linear infinite;
+  will-change: transform, opacity;
+}
+.comet::after {
+  content: '';
+  position: absolute;
+  right: -1px;
+  top: 50%;
+  width: 2px;
+  height: 2px;
+  transform: translateY(-50%);
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 0 6px 1px rgba(255, 255, 255, 0.8), 0 0 14px 4px var(--comet-tint, rgba(255, 90, 31, 0.25));
+}
+@keyframes comet-streak {
+  0%   { opacity: 0; transform: rotate(var(--comet-angle, 165deg)) translateX(0); }
+  1.5% { opacity: 0.5; }
+  5%   { opacity: 0.5; }
+  6.5% { opacity: 0; transform: rotate(var(--comet-angle, 165deg)) translateX(56vw); }
+  100% { opacity: 0; transform: rotate(var(--comet-angle, 165deg)) translateX(56vw); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .comet {
+    animation: none;
+    opacity: 0;
+  }
+}
+
+/* ─── Service cards — illustrated figures with a springy pop.
+       The whole figure jumps toward the viewer on hover / keyboard focus /
+       press (`:active` covers tap on coarse pointers, where hover never
+       fires). The `.figure-front` layer moves slightly more, on a short
+       delay, for a parallax depth read. Under prefers-reduced-motion the
+       pop is disabled and only the halo glow fades in. ─── */
+
+.service-figure {
+  transform: translateZ(0);
+  transition: transform 0.5s var(--ease-spring);
+  will-change: transform;
+}
+.service-card:hover .service-figure,
+.service-card:focus-visible .service-figure,
+.service-card:active .service-figure {
+  transform: translateY(-10px) scale(1.08);
+}
+
+.figure-front {
+  transition: transform 0.5s var(--ease-spring) 40ms;
+}
+.service-card:hover .figure-front,
+.service-card:focus-visible .figure-front,
+.service-card:active .figure-front {
+  transform: translateY(-4px) scale(1.05);
+}
+
+.figure-halo {
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+.service-card:hover .figure-halo,
+.service-card:focus-visible .figure-halo,
+.service-card:active .figure-halo {
+  opacity: 1;
+}
+
+.figure-tint {
+  transition: color 0.3s ease;
+}
+.service-card:hover .figure-tint,
+.service-card:focus-visible .figure-tint,
+.service-card:active .figure-tint {
+  color: var(--accent);
+}
+
+.service-ring {
+  transition: transform 0.9s var(--ease-spring);
+  transform-origin: 50% 50%;
+}
+.service-card:hover .service-ring,
+.service-card:focus-visible .service-ring,
+.service-card:active .service-ring {
+  transform: rotate(100deg);
+}
+
+/* Touch / coarse-pointer: no hover exists, so keep a hint of the halo on
+   at rest; press (`:active`) and focus still trigger the full state. */
+@media (hover: none) {
+  .figure-halo {
+    opacity: 0.45;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .service-figure,
+  .figure-front,
+  .service-ring {
+    transition: none;
+  }
+  .service-card:hover .service-figure,
+  .service-card:focus-visible .service-figure,
+  .service-card:active .service-figure,
+  .service-card:hover .figure-front,
+  .service-card:focus-visible .figure-front,
+  .service-card:active .figure-front,
+  .service-card:hover .service-ring,
+  .service-card:focus-visible .service-ring,
+  .service-card:active .service-ring {
+    transform: none;
+  }
+}
+
+/* ─── Orbit divider — accent planet drifting along the section-break arc ─── */
+
+.divider-orbit-dot {
+  display: none;
+}
+@supports (offset-path: path("M0 0 L1 1")) {
+  .divider-orbit-dot {
+    display: block;
+    position: absolute;
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 32% 28%, #ffe8d9 0%, #ff8a4c 40%, #ff5a1f 70%, #7a2400 100%);
+    box-shadow: 0 0 10px 2px rgba(255, 90, 31, 0.4);
+    offset-distance: 50%;
+    offset-rotate: 0deg;
+    animation: divider-drift 18s ease-in-out infinite alternate;
+  }
+}
+@keyframes divider-drift {
+  from { offset-distance: 14%; }
+  to   { offset-distance: 86%; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .divider-orbit-dot {
+    animation: none;
+  }
+}

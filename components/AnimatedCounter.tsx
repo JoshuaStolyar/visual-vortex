@@ -24,6 +24,12 @@ export default function AnimatedCounter({
       if (hasAnimated) return;
       setHasAnimated(true);
 
+      // Reduced motion: skip the count-up, show the final value immediately
+      if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+        setCount(end);
+        return;
+      }
+
       const startTime = Date.now();
       const endTime = startTime + duration;
 
