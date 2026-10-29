@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Visual Vortex · Partner portal</title>
+<link rel="icon" href="/icon.png">
+<style>
+  :root { color-scheme: dark; --bg: #08080a; --fg: #f4f2ee; --muted: #8d8a85; --accent: #ff5a1f; }
+  * { box-sizing: border-box; }
+  body { margin: 0; min-height: 100dvh; display: grid; place-items: center; background: radial-gradient(60% 50% at 50% 35%, rgba(255,90,31,.14), transparent 70%), var(--bg); color: var(--fg); font: 16px/1.5 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; padding: 24px 16px; }
+  main { width: min(420px, 100%); text-align: center; }
+  .mark { width: 56px; height: 56px; margin: 0 auto 20px; border-radius: 50%; background: conic-gradient(from 0deg, var(--accent), #ff3df2, #8a3dff, var(--accent)); animation: spin 1.4s linear infinite; -webkit-mask: radial-gradient(circle, transparent 15px, #000 16px); mask: radial-gradient(circle, transparent 15px, #000 16px); }
+  .off .mark { animation: none; opacity: .35; }
+  h1 { margin: 0; font-size: 22px; font-weight: 700; letter-spacing: -.01em; }
+  p { margin: 8px 0 0; color: var(--muted); font-size: 15px; }
+  button { margin-top: 20px; height: 44px; padding: 0 22px; border: 0; border-radius: 999px; background: var(--accent); color: #fff; font: inherit; font-weight: 600; cursor: pointer; }
+  [hidden] { display: none !important; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  @media (prefers-reduced-motion: reduce) { .mark { animation: none; } }
+</style>
+</head>
+<body>
+<main id="box">
+  <div class="mark" aria-hidden="true"></div>
+  <h1 id="title">Opening your portal…</h1>
+  <p id="text">One second.</p>
+  <button id="retry" type="button" hidden>Try again</button>
+</main>
+<script>
+  // The portal runs on Visual Vortex's own machine; its current address is posted (signed) every minute. This page
+  // checks the signature against the key below and sends you on, keeping the rest of the link (/p/portal → /portal).
+  const SUPABASE = "https://gjksyrsfmszhewtwtdej.supabase.co";
+  const ANON = "sb_publishable_bxifeMb2ZEzTrLbG6TEwwA_n6-15_hs";
+  const PUBLIC_KEY = {"kty":"EC","crv":"P-256","x":"HHx2tQ9Vh8BQEa0LFKHH0rbPz9yDv9ugrYQ05ZrBFdA","y":"KOgWBz1zNRY-t1-ww4jdMaP9Q5xMJbRZmdor6jau_xE"};
+  const FRESH_MS = 5 * 60 * 1000;
+
+  const $ = (id) => document.getElementById(id);
+  const b64 = (s) => Uint8Array.from(atob(s.replace(/-/g, "+").replace(/_/g, "/") + "===".slice((s.length + 3) % 4)), (c) => c.charCodeAt(0));
+  function offline(title, text) {
+    $("box").classList.add("off");
+    $("title").textContent = title;
+    $("text").textContent = text;
+    $("retry").hidden = false;
+  }
+  async function go() {
+    $("box").classList.remove("off");
+    $("retry").hidden = true;
+    $("title").textContent = "Opening your portal…";
+    $("text").textContent = "One second.";
+    try {
+      const res = await fetch(`${SUPABASE}/rest/v1/thumb_docs?coll=eq.vv_portal&id=eq.address&select=data`, { headers: { apikey: ANON, Authorization: `Bearer ${ANON}` }, cache: "no-store" });
+      const [row] = await res.json();
+      const { payload, sig } = row?.data ?? {};
+      if (typeof payload !== "string" || typeof sig !== "string") throw new Error("no address");
+      const key = await crypto.subtle.importKey("jwk", PUBLIC_KEY, { name: "ECDSA", namedCurve: "P-256" }, false, ["verify"]);
+      const ok = await crypto.subtle.verify({ name: "ECDSA", hash: "SHA-256" }, key, b64(sig), new TextEncoder().encode(payload));
+      if (!ok) throw new Error("bad signature");
+      const { url, at } = JSON.parse(payload);
+      if (!/^https:\/\/[a-z0-9-]+\.trycloudflare\.com$/.test(url)) throw new Error("bad address");
+      if (Date.now() - Date.parse(at) > FRESH_MS) return offline("The portal is resting", "It's offline for a few minutes. Try again shortly.");
+      const rest = location.pathname.replace(/^\/p(?=\/|$)/i, "") || "/";
+      location.replace(url + rest + location.search + location.hash);
+    } catch {
+      offline("Couldn't reach the portal", "Check your connection and try again.");
+    }
+  }
+  $("retry").addEventListener("click", go);
+  go();
+</script>
+</body>
+</html>
