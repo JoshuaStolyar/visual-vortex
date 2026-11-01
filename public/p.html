@@ -35,6 +35,9 @@
   const ANON = "sb_publishable_bxifeMb2ZEzTrLbG6TEwwA_n6-15_hs";
   const PUBLIC_KEY = {"kty":"EC","crv":"P-256","x":"HHx2tQ9Vh8BQEa0LFKHH0rbPz9yDv9ugrYQ05ZrBFdA","y":"KOgWBz1zNRY-t1-ww4jdMaP9Q5xMJbRZmdor6jau_xE"};
   const FRESH_MS = 5 * 60 * 1000;
+  const REMEMBER = "vv_portal_signin";
+  // Only ever a path on the portal itself.
+  const safe = (p) => (typeof p === "string" && /^\/(?!\/)/.test(p) ? p : "/");
 
   const $ = (id) => document.getElementById(id);
   const b64 = (s) => Uint8Array.from(atob(s.replace(/-/g, "+").replace(/_/g, "/") + "===".slice((s.length + 3) % 4)), (c) => c.charCodeAt(0));
@@ -61,6 +64,21 @@
       if (!/^https:\/\/[a-z0-9-]+\.trycloudflare\.com$/.test(url)) throw new Error("bad address");
       if (Date.now() - Date.parse(at) > FRESH_MS) return offline("The portal is resting", "It's offline for a few minutes. Try again shortly.");
       const rest = location.pathname.replace(/^\/p(?=\/|$)/i, "") || "/";
+      // Who signed in here last: the portal hands back a signed login link after sign-in (#remember=…) and asks to
+      // forget it on sign-out (#forget). It lets a returning visitor straight back in after the address changes.
+      const hash = new URLSearchParams(location.hash.slice(1));
+      const store = { get: () => { try { return localStorage.getItem(REMEMBER); } catch { return null; } }, set: (v) => { try { v ? localStorage.setItem(REMEMBER, v) : localStorage.removeItem(REMEMBER); } catch {} } };
+      if (hash.has("forget")) {
+        store.set(null);
+        return location.replace(url + "/login?signedOut=1");
+      }
+      if (hash.has("remember")) {
+        store.set(hash.get("remember"));
+        history.replaceState(null, "", location.pathname);
+        return location.replace(url + safe(hash.get("next")));
+      }
+      const saved = store.get();
+      if (saved && /^[A-Za-z0-9._-]{20,300}$/.test(saved)) return location.replace(`${url}/api/auth/link?r=1&t=${encodeURIComponent(saved)}&next=${encodeURIComponent(rest + location.search)}`);
       location.replace(url + rest + location.search + location.hash);
     } catch {
       offline("Couldn't reach the portal", "Check your connection and try again.");
